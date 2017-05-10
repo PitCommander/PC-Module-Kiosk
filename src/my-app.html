@@ -1,0 +1,154 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html">
+<link rel="import" href="my-view1.html">
+<link rel="import" href="my-view2.html">
+<link rel="import" href="my-view3.html">
+<link rel="import" href="my-view4.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+
+<dom-module id="my-app">
+    <template>
+    <style>
+      :host {
+        --app-primary-color: #d35401;
+        --app-secondary-color: black;
+        display: block;
+        
+      }
+        
+    @media only screen  and (min-width : 1824px) {
+        .header-text {
+            font-size: 50px;;
+        }
+        
+        paper-tab {
+            font-size: 50px;
+        }
+        
+        h1 {
+            font-size: 50px;
+        }
+        
+              .circle {
+        margin-top: 15px;
+      }
+    }
+      
+      @media only screen  and (max-width : 1823px) {
+        .header-text {
+            font-size: 20px;;
+        }
+          
+        paper-tab {
+            font-size: 20px;
+        }
+        
+        h1 {
+            font-size: 20px;
+        }
+          
+                .circle {
+        margin-top: 5px;
+      }
+    }
+          
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+      
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+            
+      paper-tabs {
+        --paper-tabs-selection-bar-color: black;
+        height: 100%;
+      }
+      
+      paper-tab {
+        --paper-tab-ink: #333;
+        text-transform: uppercase;
+        font-size: var(--big-text-size);
+      }
+      
+      .link {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        color: inherit;
+        text-decoration: inherit;
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+        
+        
+        
+    .
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed force-narrow>
+
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header fixed>
+          <app-toolbar>
+            <div main-title class="header-text">PIT COMMANDER</div>
+            <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
+              <paper-tab link name="view1">
+                <a href="/view1"  class="link" tabindex="-1">Checklist</a>
+              </paper-tab>
+              <paper-tab link name="view2">
+                <a href="/view2"  class="link" tabindex="-1">Match Data</a>
+              </paper-tab>
+              <paper-tab link name="view3">
+                <a href="/view3" class="link" tabindex="-1">Screen Controls</a>
+              </paper-tab>
+              <paper-tab link name="view4">
+                <a href="/view4" class="link" tabindex="-1">Safety</a>
+              </paper-tab>
+            </paper-tabs>
+          </app-toolbar>
+        </app-header>
+		
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+          <my-view1 name="view1"></my-view1>
+          <my-view2 name="view2"></my-view2>
+          <my-view3 name="view3"></my-view3>
+          <my-view404 name="view404"></my-view404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+    <script>
+        Polymer({
+            is: 'my-app',
+
+            properties: {
+                page: {
+                    type: String,
+					value: "view1",
+                    reflectToAttribute: true,
+                },
+            },
+        });
+
+    </script>
+</dom-module>
