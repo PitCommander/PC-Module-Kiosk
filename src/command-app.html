@@ -11,59 +11,54 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
-<link rel="import" href="my-view1.html">
-<link rel="import" href="my-view2.html">
-<link rel="import" href="my-view3.html">
-<link rel="import" href="my-view4.html">
+<link rel="import" href="checklist-view.html">
+<link rel="import" href="match-view.html">
+<link rel="import" href="screen-view.html">
+<link rel="import" href="safety-view.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 
-<dom-module id="my-app">
-    <template>
+<dom-module id="command-app">
+  <template>
     <style>
       :host {
         --app-primary-color: #d35401;
         --app-secondary-color: black;
         display: block;
-        
       }
-        
-    @media only screen  and (min-width : 1824px) {
-        .header-text {
-            font-size: 50px;;
-        }
-        
-        paper-tab {
-            font-size: 50px;
-        }
-        
-        h1 {
-            font-size: 50px;
-        }
-        
-              .circle {
-        margin-top: 15px;
-      }
-    }
       
-      @media only screen  and (max-width : 1823px) {
+      @media only screen and (min-width: 1824px) {
         .header-text {
-            font-size: 20px;;
+          font-size: 50px;
+          ;
         }
-          
         paper-tab {
-            font-size: 20px;
+          font-size: 50px;
         }
-        
         h1 {
-            font-size: 20px;
+          font-size: 50px;
         }
-          
-                .circle {
-        margin-top: 5px;
+        .circle {
+          margin-top: 15px;
+        }
       }
-    }
-          
+      
+      @media only screen and (max-width: 1823px) {
+        .header-text {
+          font-size: 20px;
+          ;
+        }
+        paper-tab {
+          font-size: 20px;
+        }
+        h1 {
+          font-size: 20px;
+        }
+        .circle {
+          margin-top: 5px;
+        }
+      }
+      
       app-header {
         color: #fff;
         background-color: var(--app-primary-color);
@@ -72,7 +67,7 @@
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-            
+      
       paper-tabs {
         --paper-tabs-selection-bar-color: black;
         height: 100%;
@@ -92,10 +87,8 @@
         padding-right: 10px;
         padding-left: 10px;
       }
-        
-        
-        
-    .
+      
+      .
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -111,44 +104,44 @@
           <app-toolbar>
             <div main-title class="header-text">PIT COMMANDER</div>
             <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
-              <paper-tab link name="view1">
-                <a href="/view1"  class="link" tabindex="-1">Checklist</a>
+              <paper-tab link name="checklist">
+                <a href="/checklist" class="link" tabindex="-1">Checklist</a>
               </paper-tab>
-              <paper-tab link name="view2">
-                <a href="/view2"  class="link" tabindex="-1">Match Data</a>
+              <paper-tab link name="match">
+                <a href="/match" class="link" tabindex="-1">Match Data</a>
               </paper-tab>
-              <paper-tab link name="view3">
-                <a href="/view3" class="link" tabindex="-1">Screen Controls</a>
+              <paper-tab link name="screen">
+                <a href="/screen" class="link" tabindex="-1">Screen Controls</a>
               </paper-tab>
-              <paper-tab link name="view4">
-                <a href="/view4" class="link" tabindex="-1">Safety</a>
+              <paper-tab link name="safety">
+                <a href="/safety" class="link" tabindex="-1">Safety</a>
               </paper-tab>
             </paper-tabs>
           </app-toolbar>
         </app-header>
-		
+
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
+          <checklist-view name="checklist"></checklist-view>
+          <match-view name="match"></match-view>
+          <screen-view name="screen"></screen-view>
+          <safety-view name="safety"></safety-view>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
 
-    <script>
-        Polymer({
-            is: 'my-app',
+  <script>
+    Polymer({
+      is: 'command-app',
 
-            properties: {
-                page: {
-                    type: String,
-					value: "view1",
-                    reflectToAttribute: true,
-                },
-            },
-        });
-
-    </script>
+      properties: {
+        page: {
+          type: String,
+          value: "checklist",
+          reflectToAttribute: true,
+        },
+      },
+    });
+  </script>
 </dom-module>

@@ -1,9 +1,9 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "pit-commander-app",
   "authors": [
-    "The Polymer Authors"
+    "FRC Team 401"
   ],
-  "license": "https://polymer.github.io/LICENSE.txt",
+  "license": "GNU-GPLv3",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^0.10.0",
     "app-route": "PolymerElements/app-route#^0.9.0",
