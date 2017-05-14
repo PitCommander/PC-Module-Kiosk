@@ -9,8 +9,14 @@ Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
     npm install -g bower
 
-Install polymer components   
-   `polymer install`
+Install polymer components
 
-Assuming successful installation, in-browser version should be startable via `polymer serve --open`   
-Electron version should be startable via `npm start`
+    polymer install
+
+Assuming successful installation, in-browser version should be startable via 
+
+    polymer serve --open   
+
+Electron version should be startable via 
+
+    npm start
