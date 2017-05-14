@@ -1,17 +1,10 @@
 Polymer + electron package for Pit Commander UI
 
-First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
-[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
+Install package:
 
-    npm install -g polymer-cli
+    npm install
 
-Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
-
-    npm install -g bower
-
-Install polymer components
-
-    polymer install
+Post install script should automatically call `polymer install` and install all bower dependencies.
 
 Assuming successful installation, in-browser version should be startable via 
 
