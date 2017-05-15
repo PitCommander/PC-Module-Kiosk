@@ -1,19 +1,30 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="tv-control.html">
 
 <dom-module id="screen-view">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
+      
+      @media only screen and (max-width: 1823px) {
+        .tvCards {
+          @apply(--layout-vertical);
+        }
+      }
+      
+      @media only screen and (min-width: 1824px) {
+        .tvCards {
+          @apply(--layout-horizontal);
+        }
+      }
     </style>
-
-    <div class="card">
-      <h1>Screen Controls</h1>
-      <p>Screen control buttons will go here.</p>
+    <div class="tvCards">
+      <tv-control name="Left" selected="stream" class="flex-child"></tv-control>
+      <tv-control name="Right" selected="timer" class="flex-child"></tv-control>
     </div>
   </template>
 

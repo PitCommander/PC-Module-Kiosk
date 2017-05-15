@@ -7,11 +7,7 @@
       .card-layout {
         @apply(--layout-horizontal);
       }
-      
-      .flex-child {
-        @apply(--layout-flex);
-      }
-      
+
       h1 {
         padding-left: 15px;
       }
@@ -22,7 +18,7 @@
       }
     </style>
 
-    <div class="card card-layout" >
+    <div class="card card-layout">
       <div class="circle">{{num}}</div>
       <h1 class="flex-child">{{text}}</h1>
       <paper-checkbox id="box" class="huge" on-tap='toggle'></paper-checkbox>
