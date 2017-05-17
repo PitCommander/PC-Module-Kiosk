@@ -20,7 +20,7 @@
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 
 <dom-module id="command-app">
-  <template>
+    <template>
     <style>
       :host {
         --app-primary-color: #d35401;
@@ -122,8 +122,8 @@
             </paper-tabs>
           </app-toolbar>
         </app-header>
-        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main"  entry-animation="scale-up-animation" exit-animation="scale-down-animation">
-          <checklist-view name="checklist"></checklist-view>
+        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main"  entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+          <checklist-view name="checklist" id="checklist"></checklist-view>
           <match-view name="match"></match-view>
           <screen-view name="screen"></screen-view>
           <safety-view name="safety"></safety-view>
@@ -133,17 +133,17 @@
     </app-drawer-layout>
   </template>
 
-  <script>
-    Polymer({
-      is: 'command-app',
+    <script>
+        Polymer({
+            is: 'command-app',
+            properties: {
+                page: {
+                    type: String,
+                    value: "checklist",
+                    reflectToAttribute: true,
+                },
+            },
+        });
 
-      properties: {
-        page: {
-          type: String,
-          value: "checklist",
-          reflectToAttribute: true,
-        },
-      },
-    });
-  </script>
+    </script>
 </dom-module>
