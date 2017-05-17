@@ -13,8 +13,10 @@ sock.on('message', function (message) {
 
     switch (messageObj.id) {
         case 'TimeTick':
-            console.log(messageObj.payload.newTime);
-            document.querySelector('match-view').ttz = messageObj.payload.newTime;
+            document.querySelector('match-view').ttz = messageObj.payload.timeToZero / 60;
             break;
+        case 'MatchContainerUpdate':
+            document.querySelector('match-view').nextNum = messageObj.payload.container.currentMatch.comp_level.toUpperCase() + messageObj.payload.container.currentMatch.match_number;
+            console.log();
     }
 });
