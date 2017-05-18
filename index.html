@@ -9,19 +9,22 @@
     <title>PIT COMMANDER</title>
     <meta name="description" content="FRC401 Pit UI">
 
-    <link rel="icon" href="/images/favicon.ico">->
+    <link rel="icon" href="/images/favicon.ico">
     <link rel="manifest" href="/manifest.json">
+
     <meta name="theme-color" content="#d35401">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Pit401">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pit 401">
+
     <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
     <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
     <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
+
     <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
     <meta name="msapplication-TileColor" content="#d35401">
     <meta name="msapplication-tap-highlight" content="no">
@@ -70,6 +73,7 @@
     </script>
 
     <link rel="import" href="src/command-app.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
 
     <style>
         body {
@@ -85,6 +89,14 @@
 
 <body>
     <command-app></command-app>
+    <paper-dialog with-backdrop id="dialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+        <h2>Add Checklist Item</h2>
+        <div>Submission stuff should go here</div>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button dialog-confirm>Submit</paper-button>
+        </div>
+    </paper-dialog>
 </body>
 
 </html>

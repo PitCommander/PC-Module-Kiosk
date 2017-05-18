@@ -18,6 +18,7 @@
 <link rel="import" href="safety-view.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="command-app">
     <template>
@@ -89,9 +90,7 @@
         padding-left: 10px;
       }
       
-      neon-animated-pages {
-        margin-top: 50px;
-      }
+
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -105,7 +104,7 @@
 
         <app-header fixed id="header">
           <app-toolbar>
-            <div main-title class="header-text">PIT COMMANDER</div>
+            <div main-title class="header-text">PitCommander - UI</div>
             <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
               <paper-tab link name="checklist">
                 <a href="/checklist" class="link" tabindex="-1">Checklist</a>

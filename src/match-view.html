@@ -34,10 +34,14 @@
       <h1>Next Match: {{nextNum}}</h1>
       <h1>Scheduled Time: {{scheduledTime}}</h1>
       <h1>Predicted Time: {{predictedTime}}</h1>
-      <h1>Leave for match in: {{ttz}} minutes.</h1>
+      <h1>Leave for match in: {{ttz}}</h1>
     </div>
     <div class="card" id='bumpers'>
-      <h1 class="bumperText">Robot needs {{bumperColor}} bumpers.</h1>
+      <h1>Allies: {{allies}}</h1>
+      <h1>Opponents: {{oppo}}</h1>
+    </div>
+    <div class="card" id='bumpers'>
+      <h1 class="bumperText">Robot needs {{bumperColor}} bumpers</h1>
     </div>
   </template>
 
@@ -54,8 +58,8 @@
                     value: 'Q1'
                 },
                 ttz: {
-                    type: Number,
-                    value: 100
+                    type: String,
+                    value: ''
                 },
                 scheduledTime: {
                     type: String,
@@ -69,6 +73,14 @@
                     type: String,
                     value: 'blue',
                     observer: '_bumperHandler'
+                },
+                allies: {
+                    type: String,
+                    value: '1, 2',
+                },
+                oppo: {
+                    type: String,
+                    value: '3, 4, 5'
                 }
             },
 

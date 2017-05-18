@@ -1,7 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
 
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="checklist-item.html">
+
 
 <dom-module id="checklist-view">
     <template>
@@ -10,12 +13,25 @@
         display: block;
         padding: 10px;
       }
+        
+    .fab-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--app-primary-color);
+      color: white;
+      border-radius: 3px;
+      width: 50px;
+      height: 50px;
+    } 
+
     </style>
 
     <template is="dom-repeat" items="{{items}}">
       <checklist-item num="{{displayIndex(index)}}" text="{{item.text}}" status="{{item.status}}"></checklist-item>
     </template>
 
+    <paper-icon-button icon="add" class="fab-button" on-tap="toggleDialog"></paper-icon-button>
     </template>
 
     <script>
@@ -71,6 +87,10 @@
                     }
                 ];
             },
+
+            toggleDialog: function() {
+                document.querySelector('#dialog').toggle();
+            }
         });
 
     </script>
