@@ -22,7 +22,8 @@
     "paper-button-group": "Protoss78/paper-button-group#^0.0.1",
     "iron-icons": "PolymerElements/iron-icons#^2.0.0",
     "paper-fab": "PolymerElements/paper-fab#^2.0.0",
-    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0"
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

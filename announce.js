@@ -4,9 +4,6 @@ var zmq = require('zeromq'),
 sock.connect('tcp://10.0.0.7:5800');
 sock.subscribe('');
 
-
-console.log('running announce');
-
 sock.on('message', function (message) {
     //console.log(message);
     var messageObj = JSON.parse(message);

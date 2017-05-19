@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -7,18 +8,24 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
 <link rel="import" href="my-icons.html">
 <link rel="import" href="checklist-view.html">
 <link rel="import" href="match-view.html">
 <link rel="import" href="screen-view.html">
 <link rel="import" href="safety-view.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="command-app">
     <template>
@@ -89,8 +96,11 @@
         padding-right: 10px;
         padding-left: 10px;
       }
-      
-
+        
+              .big {
+            --iron-icon-height: 50px;
+            --iron-icon-width: 50px;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -104,7 +114,7 @@
 
         <app-header fixed id="header">
           <app-toolbar>
-            <div main-title class="header-text">PitCommander - UI</div>
+            <div main-title class="header-text"><iron-icon class="big" icon="my-icons:snake"></iron-icon></div>
             <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
               <paper-tab link name="checklist">
                 <a href="/checklist" class="link" tabindex="-1">Checklist</a>
@@ -121,12 +131,11 @@
             </paper-tabs>
           </app-toolbar>
         </app-header>
-        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main"  entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="checklist" role="main"  entry-animation="fade-in-animation" exit-animation="fade-out-animation">
           <checklist-view name="checklist" id="checklist"></checklist-view>
           <match-view name="match"></match-view>
           <screen-view name="screen"></screen-view>
           <safety-view name="safety"></safety-view>
-          <my-view404 name="view404"></my-view404>
         </neon-animated-pages>
       </app-header-layout>
     </app-drawer-layout>

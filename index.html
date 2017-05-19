@@ -91,10 +91,12 @@
     <command-app></command-app>
     <paper-dialog with-backdrop id="dialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
         <h2>Add Checklist Item</h2>
-        <div>Submission stuff should go here</div>
+        <div>
+            <paper-input label="New Checklist Item"></paper-input>
+        </div>
         <div class="buttons">
             <paper-button dialog-dismiss>Cancel</paper-button>
-            <paper-button dialog-confirm>Submit</paper-button>
+            <paper-button dialog-confirm ontap="">Submit</paper-button>
         </div>
     </paper-dialog>
 </body>
