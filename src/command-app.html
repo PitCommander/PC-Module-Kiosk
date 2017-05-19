@@ -28,7 +28,7 @@
 <link rel="import" href="safety-view.html">
 
 <dom-module id="command-app">
-    <template>
+  <template>
     <style>
       :host {
         --app-primary-color: #d35401;
@@ -96,10 +96,10 @@
         padding-right: 10px;
         padding-left: 10px;
       }
-        
-              .big {
-            --iron-icon-height: 50px;
-            --iron-icon-width: 50px;
+      
+      .big {
+        --iron-icon-height: 50px;
+        --iron-icon-width: 50px;
       }
     </style>
 
@@ -114,7 +114,9 @@
 
         <app-header fixed id="header">
           <app-toolbar>
-            <div main-title class="header-text"><iron-icon class="big" icon="my-icons:snake"></iron-icon></div>
+            <div main-title class="header-text">
+              <iron-icon class="big" icon="my-icons:snake"></iron-icon>
+            </div>
             <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
               <paper-tab link name="checklist">
                 <a href="/checklist" class="link" tabindex="-1">Checklist</a>
@@ -131,7 +133,7 @@
             </paper-tabs>
           </app-toolbar>
         </app-header>
-        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="checklist" role="main"  entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="checklist" role="main" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
           <checklist-view name="checklist" id="checklist"></checklist-view>
           <match-view name="match"></match-view>
           <screen-view name="screen"></screen-view>
@@ -141,17 +143,16 @@
     </app-drawer-layout>
   </template>
 
-    <script>
-        Polymer({
-            is: 'command-app',
-            properties: {
-                page: {
-                    type: String,
-                    value: "checklist",
-                    reflectToAttribute: true,
-                },
-            },
-        });
-
-    </script>
+  <script>
+    Polymer({
+      is: 'command-app',
+      properties: {
+        page: {
+          type: String,
+          value: "checklist",
+          reflectToAttribute: true,
+        },
+      },
+    });
+  </script>
 </dom-module>

@@ -2,13 +2,13 @@
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="match-view">
-    <template>
+  <template>
     <style include="shared-styles">
       :host {
         display: block;
         padding: 10px;
       }
-
+      
       .blue {
         background: CornflowerBlue;
       }
@@ -45,61 +45,60 @@
     </div>
   </template>
 
-    <script>
-        Polymer({
-            is: 'match-view',
-            properties: {
-                record: {
-                    type: String,
-                    value: '0-0-0'
-                },
-                nextNum: {
-                    type: String,
-                    value: 'Q1'
-                },
-                ttz: {
-                    type: String,
-                    value: ''
-                },
-                scheduledTime: {
-                    type: String,
-                    value: '3:50 PM'
-                },
-                predictedTime: {
-                    type: String,
-                    value: '3:52 PM'
-                },
-                bumperColor: {
-                    type: String,
-                    value: 'blue',
-                    observer: '_bumperHandler'
-                },
-                allies: {
-                    type: String,
-                    value: '1, 2',
-                },
-                oppo: {
-                    type: String,
-                    value: '3, 4, 5'
-                }
-            },
+  <script>
+    Polymer({
+      is: 'match-view',
+      properties: {
+        record: {
+          type: String,
+          value: '0-0-0'
+        },
+        nextNum: {
+          type: String,
+          value: 'Q1'
+        },
+        ttz: {
+          type: String,
+          value: ''
+        },
+        scheduledTime: {
+          type: String,
+          value: '3:50 PM'
+        },
+        predictedTime: {
+          type: String,
+          value: '3:52 PM'
+        },
+        bumperColor: {
+          type: String,
+          value: 'blue',
+          observer: '_bumperHandler'
+        },
+        allies: {
+          type: String,
+          value: '1, 2',
+        },
+        oppo: {
+          type: String,
+          value: '3, 4, 5'
+        }
+      },
 
-            _bumperHandler: function() {
-                currentColor = this.bumperColor.toLowerCase();
+      _bumperHandler: function () {
+        currentColor = this.bumperColor.toLowerCase();
 
-                if (currentColor == 'red') {
-                    this.$.bumpers.classList.remove('blue');
-                    this.$.bumpers.classList.add('red');
-                } else if (currentColor == 'blue') {
-                    this.$.bumpers.classList.remove('red');
-                    this.$.bumpers.classList.add('blue');
-                } else {
-                    this.$.bumpers.classList.remove('red');
-                    this.$.bumpers.classList.remove('blue');
-                    this.$.bumpers.visibility = 'hidden';
-                }
-            }
-        });
-
-    </script>
+        if (currentColor == 'red') {
+          this.$.bumpers.classList.remove('blue');
+          this.$.bumpers.classList.add('red');
+        } else if (currentColor == 'blue') {
+          this.$.bumpers.classList.remove('red');
+          this.$.bumpers.classList.add('blue');
+        } else {
+          this.$.bumpers.classList.remove('red');
+          this.$.bumpers.classList.remove('blue');
+          this.$.bumpers.visibility = 'hidden';
+        }
+      }
+    });
+  </script>
 </dom-module>

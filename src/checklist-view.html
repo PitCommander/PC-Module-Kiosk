@@ -7,25 +7,24 @@
 
 
 <dom-module id="checklist-view">
-    <template>
+  <template>
     <style include="shared-styles">
       :host {
         display: block;
         padding: 10px;
       }
-        
-    .fab-button {
-      position: fixed;
-      bottom: 10px;
-      right: 50%;
-      right: calc(50% - 40px);
-      background: var(--app-primary-color);
-      color: white;
-      border-radius: 40px;
-      width: 80px;
-      height: 80px;
-    } 
-
+      
+      .fab-button {
+        position: fixed;
+        bottom: 10px;
+        right: 50%;
+        right: calc(50% - 40px);
+        background: var(--app-primary-color);
+        color: white;
+        border-radius: 40px;
+        width: 80px;
+        height: 80px;
+      }
     </style>
 
     <template is="dom-repeat" items="{{items}}">
@@ -33,66 +32,65 @@
     </template>
 
     <paper-icon-button icon="add" class="fab-button" on-tap="toggleDialog"></paper-icon-button>
-    </template>
+  </template>
 
-    <script>
-        Polymer({
-            is: 'checklist-view',
-            displayIndex: function(index) {
-                return index + 1;
-            },
-            ready: function() {
-                this.items = [{
-                        text: 'test',
-                        status: false
+  <script>
+    Polymer({
+      is: 'checklist-view',
+      displayIndex: function (index) {
+        return index + 1;
+      },
+      ready: function () {
+        this.items = [{
+            text: 'test',
+            status: false
                     },
-                    {
-                        text: 'Gear holder servos both move to correct positions.',
-                        status: false
+          {
+            text: 'Gear holder servos both move to correct positions.',
+            status: false
                     },
-                    {
-                        text: 'Gear holder pneumatic opens and closes.',
-                        status: false
+          {
+            text: 'Gear holder pneumatic opens and closes.',
+            status: false
                     },
-                    {
-                        text: 'All drive module wheels and motors spin.',
-                        status: false
+          {
+            text: 'All drive module wheels and motors spin.',
+            status: false
                     },
-                    {
-                        text: 'All drive modules toggle mode.',
-                        status: false
+          {
+            text: 'All drive modules toggle mode.',
+            status: false
                     },
-                    {
-                        text: 'Intake opens and spins.',
-                        status: false
+          {
+            text: 'Intake opens and spins.',
+            status: false
                     },
-                    {
-                        text: 'Hopper bottom, kicker roller, and shooter wheel all spin.',
-                        status: false
+          {
+            text: 'Hopper bottom, kicker roller, and shooter wheel all spin.',
+            status: false
                     },
-                    {
-                        text: 'Air pressure is above 110 PSI.',
-                        status: false
+          {
+            text: 'Air pressure is above 110 PSI.',
+            status: false
                     },
-                    {
-                        text: 'Fresh battery is installed.',
-                        status: false
+          {
+            text: 'Fresh battery is installed.',
+            status: false
                     },
-                    {
-                        text: 'Driver Station charger is on cart.',
-                        status: false
+          {
+            text: 'Driver Station charger is on cart.',
+            status: false
                     },
-                    {
-                        text: 'Correct color bumpers on robot.',
-                        status: false
+          {
+            text: 'Correct color bumpers on robot.',
+            status: false
                     }
                 ];
-            },
+      },
 
-            toggleDialog: function() {
-                document.querySelector('#dialog').toggle();
-            }
-        });
-
-    </script>
+      toggleDialog: function () {
+        document.querySelector('#dialog').toggle();
+      }
+    });
+  </script>
 </dom-module>
