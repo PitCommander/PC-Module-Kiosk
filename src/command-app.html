@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -8,110 +7,94 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animations.html">
-
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/av-icons.html">
-
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-
 <link rel="import" href="my-icons.html">
 <link rel="import" href="checklist-view.html">
 <link rel="import" href="match-view.html">
 <link rel="import" href="screen-view.html">
 <link rel="import" href="safety-view.html">
-
+<link rel="import" href="keyboard-view.html">
 <dom-module id="command-app">
   <template>
     <style>
-      :host {
-        --app-primary-color: #d35401;
-        --app-secondary-color: black;
-        display: block;
+     :host {
+      --app-primary-color: #d35401;
+      --app-secondary-color: black;
+      display: block;
+    }
+    
+    @media only screen and (min-width: 1824px) {
+      .header-text {
+        font-size: 50px;
+        ;
       }
-      
-      @media only screen and (min-width: 1824px) {
-        .header-text {
-          font-size: 50px;
-          ;
-        }
-        paper-tab {
-          font-size: 50px;
-        }
-        h1 {
-          font-size: 50px;
-        }
-        .circle {
-          margin-top: 15px;
-        }
-      }
-      
-      @media only screen and (max-width: 1823px) {
-        .header-text {
-          font-size: 20px;
-          ;
-        }
-        paper-tab {
-          font-size: 20px;
-        }
-        h1 {
-          font-size: 20px;
-        }
-        .circle {
-          margin-top: 5px;
-        }
-      }
-      
-      app-header {
-        color: #fff;
-        background-color: var(--app-primary-color);
-      }
-      
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
-      
-      paper-tabs {
-        --paper-tabs-selection-bar-color: black;
-        height: 100%;
-      }
-      
       paper-tab {
-        --paper-tab-ink: #333;
-        text-transform: uppercase;
-        font-size: var(--big-text-size);
+        font-size: 50px;
       }
-      
-      .link {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        color: inherit;
-        text-decoration: inherit;
-        padding-right: 10px;
-        padding-left: 10px;
+      h1 {
+        font-size: 50px;
       }
-      
-      .big {
-        --iron-icon-height: 50px;
-        --iron-icon-width: 50px;
+    }
+    
+    @media only screen and (max-width: 1823px) {
+      .header-text {
+        font-size: 20px;
+        ;
       }
+      paper-tab {
+        font-size: 20px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+    }
+    
+    app-header {
+      color: #fff;
+      background-color: var(--app-primary-color);
+    }
+    
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
+    
+    paper-tabs {
+      --paper-tabs-selection-bar-color: black;
+      height: 100%;
+    }
+    
+    paper-tab {
+      --paper-tab-ink: #333;
+      text-transform: uppercase;
+      font-size: var(--big-text-size);
+    }
+    
+    .link {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      color: inherit;
+      text-decoration: inherit;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    
+    .big {
+      --iron-icon-height: 50px;
+      --iron-icon-width: 50px;
+    }
     </style>
-
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
-
     <app-drawer-layout fullbleed force-narrow>
-
-
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-
         <app-header fixed id="header">
           <app-toolbar>
             <div main-title class="header-text">
@@ -138,21 +121,21 @@
           <match-view name="match"></match-view>
           <screen-view name="screen"></screen-view>
           <safety-view name="safety"></safety-view>
+          <keyboard-view name="keyboard"></keyboard-view>
         </neon-animated-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
-
   <script>
-    Polymer({
-      is: 'command-app',
-      properties: {
-        page: {
-          type: String,
-          value: "checklist",
-          reflectToAttribute: true,
-        },
+  Polymer({
+    is: 'command-app',
+    properties: {
+      page: {
+        type: String,
+        value: "checklist",
+        reflectToAttribute: true,
       },
-    });
+    },
+  });
   </script>
 </dom-module>

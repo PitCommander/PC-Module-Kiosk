@@ -1,0 +1,195 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="keyboard-view">
+  <template>
+    <style include="shared-styles">
+     :host {
+      display: block;
+      padding: 0px;
+    }
+    
+    .keys {
+      position: fixed;
+      bottom: 0px;
+      min-width: calc(100% - 80px);
+      left: 0px;
+    }
+    
+    .row {
+      padding: 5px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+    }
+    
+    .mainRowPad {
+      padding-left: 2%;
+    }
+    
+    .lowerRowPad {
+      padding-left: 5%;
+    }
+    
+    .bottomRowPad {
+      padding-left: 2%;
+    }
+    
+    .container {
+      @apply(--layout-vertical);
+    }
+    
+    .container div {
+      @apply(--layout-flex);
+    }
+    
+    paper-button {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 5px;
+      padding: 5px;
+      min-width: 100px;
+    }
+    
+    paper-icon-button {
+      border-radius: 30px;
+      width: 60px;
+      height: 60px;
+      color: white;
+      margin: 10px;
+    }
+    
+    .cancel {
+      background: Crimson;
+    }
+    
+    .confirm {
+      background: ForestGreen;
+    }
+    
+    .spacebar {
+      min-width: 600px;
+    }
+    
+    h1 {
+      font-size: 50px;
+    }
+    </style>
+    <div class="container">
+      <div class="card">
+        <h1 style="text-align: center;">Add Checklist Item</h1>
+        <paper-input label="New Checklist Item" value="{{itemText}}"></paper-input>
+      </div>
+      <div class="card keys">
+        <div class="row">
+          <paper-button raised on-tap="pressKey">1</paper-button>
+          <paper-button raised on-tap="pressKey">2</paper-button>
+          <paper-button raised on-tap="pressKey">3</paper-button>
+          <paper-button raised on-tap="pressKey">4</paper-button>
+          <paper-button raised on-tap="pressKey">5</paper-button>
+          <paper-button raised on-tap="pressKey">6</paper-button>
+          <paper-button raised on-tap="pressKey">7</paper-button>
+          <paper-button raised on-tap="pressKey">8</paper-button>
+          <paper-button raised on-tap="pressKey">9</paper-button>
+          <paper-button raised on-tap="pressKey">0</paper-button>
+          <paper-button raised on-tap="pressBack">
+            <iron-icon icon="backspace"></iron-icon>
+          </paper-button>
+        </div>
+        <div class="row mainRowPad">
+          <paper-button raised on-tap="pressKey">Q</paper-button>
+          <paper-button raised on-tap="pressKey">W</paper-button>
+          <paper-button raised on-tap="pressKey">E</paper-button>
+          <paper-button raised on-tap="pressKey">R</paper-button>
+          <paper-button raised on-tap="pressKey">T</paper-button>
+          <paper-button raised on-tap="pressKey">Y</paper-button>
+          <paper-button raised on-tap="pressKey">U</paper-button>
+          <paper-button raised on-tap="pressKey">I</paper-button>
+          <paper-button raised on-tap="pressKey">O</paper-button>
+          <paper-button raised on-tap="pressKey">P</paper-button>
+        </div>
+        <div class="row lowerRowPad">
+          <paper-button raised on-tap="pressKey">A</paper-button>
+          <paper-button raised on-tap="pressKey">S</paper-button>
+          <paper-button raised on-tap="pressKey">D</paper-button>
+          <paper-button raised on-tap="pressKey">F</paper-button>
+          <paper-button raised on-tap="pressKey">G</paper-button>
+          <paper-button raised on-tap="pressKey">H</paper-button>
+          <paper-button raised on-tap="pressKey">J</paper-button>
+          <paper-button raised on-tap="pressKey">K</paper-button>
+          <paper-button raised on-tap="pressKey">L</paper-button>
+          <paper-button raised on-tap="pressKey">;</paper-button>
+        </div>
+        <div class="row bottomRowPad">
+          <paper-button raised on-tap="pressKey">Z</paper-button>
+          <paper-button raised on-tap="pressKey">X</paper-button>
+          <paper-button raised on-tap="pressKey">C</paper-button>
+          <paper-button raised on-tap="pressKey">V</paper-button>
+          <paper-button raised on-tap="pressKey">B</paper-button>
+          <paper-button raised on-tap="pressKey">N</paper-button>
+          <paper-button raised on-tap="pressKey">M</paper-button>
+          <paper-button raised on-tap="pressKey">,</paper-button>
+          <paper-button raised on-tap="pressKey">.</paper-button>
+        </div>
+        <div class="row bottomRowPad">
+          <paper-icon-button icon="close" class="cancel" on-tap="cancelItem"></paper-icon-button>
+          <paper-button class="spacebar" raised on-tap="pressSpace"> </paper-button>
+          <paper-icon-button icon="check" class="confirm" on-tap="submitItem"></paper-icon-button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    is: 'keyboard-view',
+    properties: {
+      itemText: {
+        type: String,
+        value: ''
+      },
+    },
+
+    pressKey: function(e) {
+      var rawText = e.target.textContent;
+      var cleanText = this.trim(rawText);
+
+      if (this.itemText.length == 0) {
+        this.itemText = this.itemText + cleanText;
+      } else {
+        cleanText = cleanText.toLocaleLowerCase();
+        this.itemText = this.itemText + cleanText;
+      }
+    },
+
+    pressBack: function() {
+      this.itemText = this.itemText.substring(0, this.itemText.length - 1);
+    },
+
+    pressSpace: function() {
+      this.itemText = this.itemText + ' ';
+    },
+
+    submitItem: function() {
+      var newItem = {
+        'text': this.itemText,
+        'status': false
+      };
+
+      var checklist = document.querySelector('checklist-view');
+      checklist.push('items', newItem);
+      console.log(checklist.items);
+      this.itemText = '';
+      document.querySelector('command-app').page = 'checklist';
+    },
+
+    cancelItem: function() {
+      this.itemText = '';
+      document.querySelector('command-app').page = 'checklist';
+    },
+
+    trim: function(s) {
+      return (s || '').replace(/^\s+|\s+$/g, '');
+    }
+  });
+  </script>
+</dom-module>

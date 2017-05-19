@@ -2,79 +2,77 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-button-group/paper-button-group.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-
 <link rel="import" href="shared-styles.html">
 <dom-module id="tv-control">
   <template>
     <style include="shared-styles">
-      paper-button[toggles][active] {
-        background: var(--app-primary-color);
-        color: white;
+    paper-button[toggles][active] {
+      background: var(--app-primary-color);
+      color: white;
+    }
+    
+    paper-button-group {
+      @apply(--layout-vertical);
+    }
+    
+    .tvHeader {
+      @apply(--layout-flex);
+      @apply(--layout-horizontal);
+    }
+    
+    .cecControls {
+      @apply(--layout-flex);
+      align-content: right;
+      align-items: right;
+      text-align: right;
+    }
+    
+    paper-icon-button {
+      border-radius: 40px;
+      width: 80px;
+      height: 80px;
+      --paper-icon-button-ink-color: var(--app-primary-color);
+    }
+    
+    .default {
+      background: WhiteSmoke;
+    }
+    
+    .on {
+      background: var(--app-primary-color);
+      color: white;
+    }
+    
+    @media only screen and (max-width: 1823px) {
+      paper-button {
+        margin-bottom: 10px;
+        font-size: 30px;
       }
-      
-      paper-button-group {
-        @apply(--layout-vertical);
+      h1 {
+        text-align: center;
+        font-size: 40px;
       }
-      
-      .tvHeader {
-        @apply(--layout-flex);
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
+    }
+    
+    @media only screen and (min-width: 1824px) {
+      paper-button {
+        margin-bottom: 10px;
+        font-size: 50px;
       }
-      
-      .cecControls {
-        @apply(--layout-flex);
-        @apply(--layout-end-justified);
-        align-content: right;
-        align-items: right;
-        text-align: right;
+      h1 {
+        text-align: center;
+        font-size: 50px;
       }
-      
-      paper-icon-button {
-        border-radius: 40px;
-        width: 80px;
-        height: 80px;
-      }
-      
-      .default {
-        background: WhiteSmoke;
-      }
-      
-      .on {
-        background: var(--app-primary-color);
-        color: white;
-      }
-      
-      @media only screen and (max-width: 1823px) {
-        paper-button {
-          margin-bottom: 10px;
-          font-size: 30px;
-        }
-        h1 {
-          text-align: center;
-          font-size: 40px;
-        }
-      }
-      
-      @media only screen and (min-width: 1824px) {
-        paper-button {
-          margin-bottom: 10px;
-          font-size: 50px;
-        }
-        h1 {
-          text-align: center;
-          font-size: 50px;
-        }
-      }
+    }
     </style>
     <div class="card">
       <div class="tvHeader">
-        <h1>{{name}} TV Controls</h1>
+        <h1>{{name}} TV</h1>
         <div class="cecControls">
-          <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off" on-tap="iconToggle"></paper-icon-button>
-          <paper-icon-button id="down" class="default" icon="av:volume-down"></paper-icon-button>
-          <paper-icon-button id="up" class="default" icon="av:volume-up"></paper-icon-button>
-          <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new" on-tap="iconToggle"></paper-icon-button>
+          <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off" on-tap="iconTap"></paper-icon-button>
+          <paper-icon-button id="volDown" class="default" icon="av:volume-down" on-tap="iconTap"></paper-icon-button>
+          <paper-icon-button id="volUp" class="default" icon="av:volume-up" on-tap="iconTap"></paper-icon-button>
+          <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new" on-tap="iconTap"></paper-icon-button>
         </div>
       </div>
       <paper-button-group selected="{{selected}}">
@@ -86,45 +84,66 @@
       </paper-button-group>
     </div>
   </template>
-
   <script>
-    Polymer({
-      is: 'tv-control',
-      properties: {
-        name: String,
-        selected: {
-          type: String,
-          observer: '_tvController'
-        },
-        mute: {
-          type: Boolean,
-          value: false
-        },
-        power: {
-          type: Boolean,
-          value: false
-        }
+  Polymer({
+    is: 'tv-control',
+    properties: {
+      name: String,
+      selected: {
+        type: String,
+        observer: 'sendPacket'
       },
-
-      _tvController: function () {
-        console.log("Command is: " + this.name + " set to " + this.selected);
+      mute: {
+        type: Boolean,
+        value: false
       },
-
-      iconToggle: function (e) {
-        var icon = e.target.parentElement.id
-
-        if (icon == 'mute') {
-          this.mute = !this.mute;
-        }
-
-        if (icon == 'power') {
-          this.power = !this.power;
-        }
-      },
-
-      computeClass: function (f) {
-        return f ? "on" : "default";
+      power: {
+        type: Boolean,
+        value: false
       }
-    });
+    },
+
+    iconTap: function(e) {
+      var icon = e.target.parentElement.id;
+
+      switch (icon) {
+        case 'mute':
+          this.mute = !this.mute;
+          break;
+        case 'power':
+          this.power = !this.power;
+          break;
+        case 'volDown':
+          this.volumeSender('down');
+          break;
+        case 'volUp':
+          this.voluemSender('up')
+          break;
+      }
+
+      this.sendPacket();
+    },
+
+    sendPacket: function() {
+      var packet = {};
+
+      packet.name = this.name;
+      packet.selected = this.selected;
+      packet.mute = this.mute;
+      packet.power = this.power;
+
+      console.log(JSON.stringify(packet));
+    },
+    volumeSender: function(volume) {
+      var packet = {
+        'volume': volume
+      };
+      console.log(JSON.stringify(packet));
+    },
+
+    computeClass: function(f) {
+      return f ? "on" : "default";
+    }
+  });
   </script>
 </dom-module>
