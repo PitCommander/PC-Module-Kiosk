@@ -1,7 +1,13 @@
+const {
+  webFrame
+} = require( 'electron' );
+webFrame.setZoomFactor( 1 );
+webFrame.setZoomLevelLimits( 1, 1 );
+
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'sub' );
 
-sock.connect( 'tcp://10.0.0.7:5800' );
+sock.connect( 'tcp://172.0.0.2:5800' );
 sock.subscribe( '' );
 
 sock.on( 'message', function( message ) {

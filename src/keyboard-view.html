@@ -44,11 +44,11 @@
     }
     
     paper-button {
-      font-size: 30px;
+      font-size: 20px;
       font-weight: bold;
       margin: 5px;
       padding: 5px;
-      min-width: 100px;
+      min-width: 80px;
     }
     
     paper-icon-button {
@@ -74,6 +74,14 @@
     h1 {
       font-size: 50px;
     }
+    
+    paper-input {
+      --paper-input-container-input: {
+        font-size: 30px;
+      }
+      ;
+      --paper-input-container-focus-color: var(--app-primary-color);
+    }
     </style>
     <div class="container">
       <div class="card">
@@ -82,54 +90,54 @@
       </div>
       <div class="card keys">
         <div class="row">
-          <paper-button raised on-tap="pressKey">1</paper-button>
-          <paper-button raised on-tap="pressKey">2</paper-button>
-          <paper-button raised on-tap="pressKey">3</paper-button>
-          <paper-button raised on-tap="pressKey">4</paper-button>
-          <paper-button raised on-tap="pressKey">5</paper-button>
-          <paper-button raised on-tap="pressKey">6</paper-button>
-          <paper-button raised on-tap="pressKey">7</paper-button>
-          <paper-button raised on-tap="pressKey">8</paper-button>
-          <paper-button raised on-tap="pressKey">9</paper-button>
-          <paper-button raised on-tap="pressKey">0</paper-button>
-          <paper-button raised on-tap="pressBack">
+          <paper-button raised noink on-tap="pressKey">1</paper-button>
+          <paper-button raised noink on-tap="pressKey">2</paper-button>
+          <paper-button raised noink on-tap="pressKey">3</paper-button>
+          <paper-button raised noink on-tap="pressKey">4</paper-button>
+          <paper-button raised noink on-tap="pressKey">5</paper-button>
+          <paper-button raised noink on-tap="pressKey">6</paper-button>
+          <paper-button raised noink on-tap="pressKey">7</paper-button>
+          <paper-button raised noink on-tap="pressKey">8</paper-button>
+          <paper-button raised noink on-tap="pressKey">9</paper-button>
+          <paper-button raised noink on-tap="pressKey">0</paper-button>
+          <paper-button raised noink on-tap="pressBack">
             <iron-icon icon="backspace"></iron-icon>
           </paper-button>
         </div>
         <div class="row mainRowPad">
-          <paper-button raised on-tap="pressKey">Q</paper-button>
-          <paper-button raised on-tap="pressKey">W</paper-button>
-          <paper-button raised on-tap="pressKey">E</paper-button>
-          <paper-button raised on-tap="pressKey">R</paper-button>
-          <paper-button raised on-tap="pressKey">T</paper-button>
-          <paper-button raised on-tap="pressKey">Y</paper-button>
-          <paper-button raised on-tap="pressKey">U</paper-button>
-          <paper-button raised on-tap="pressKey">I</paper-button>
-          <paper-button raised on-tap="pressKey">O</paper-button>
-          <paper-button raised on-tap="pressKey">P</paper-button>
+          <paper-button raised noink on-tap="pressKey">Q</paper-button>
+          <paper-button raised noink on-tap="pressKey">W</paper-button>
+          <paper-button raised noink on-tap="pressKey">E</paper-button>
+          <paper-button raised noink on-tap="pressKey">R</paper-button>
+          <paper-button raised noink on-tap="pressKey">T</paper-button>
+          <paper-button raised noink on-tap="pressKey">Y</paper-button>
+          <paper-button raised noink on-tap="pressKey">U</paper-button>
+          <paper-button raised noink on-tap="pressKey">I</paper-button>
+          <paper-button raised noink on-tap="pressKey">O</paper-button>
+          <paper-button raised noink on-tap="pressKey">P</paper-button>
         </div>
         <div class="row lowerRowPad">
-          <paper-button raised on-tap="pressKey">A</paper-button>
-          <paper-button raised on-tap="pressKey">S</paper-button>
-          <paper-button raised on-tap="pressKey">D</paper-button>
-          <paper-button raised on-tap="pressKey">F</paper-button>
-          <paper-button raised on-tap="pressKey">G</paper-button>
-          <paper-button raised on-tap="pressKey">H</paper-button>
-          <paper-button raised on-tap="pressKey">J</paper-button>
-          <paper-button raised on-tap="pressKey">K</paper-button>
-          <paper-button raised on-tap="pressKey">L</paper-button>
-          <paper-button raised on-tap="pressKey">;</paper-button>
+          <paper-button raised noink on-tap="pressKey">A</paper-button>
+          <paper-button raised noink on-tap="pressKey">S</paper-button>
+          <paper-button raised noink on-tap="pressKey">D</paper-button>
+          <paper-button raised noink on-tap="pressKey">F</paper-button>
+          <paper-button raised noink on-tap="pressKey">G</paper-button>
+          <paper-button raised noink on-tap="pressKey">H</paper-button>
+          <paper-button raised noink on-tap="pressKey">J</paper-button>
+          <paper-button raised noink on-tap="pressKey">K</paper-button>
+          <paper-button raised noink on-tap="pressKey">L</paper-button>
+          <paper-button raised noink on-tap="pressKey">;</paper-button>
         </div>
         <div class="row bottomRowPad">
-          <paper-button raised on-tap="pressKey">Z</paper-button>
-          <paper-button raised on-tap="pressKey">X</paper-button>
-          <paper-button raised on-tap="pressKey">C</paper-button>
-          <paper-button raised on-tap="pressKey">V</paper-button>
-          <paper-button raised on-tap="pressKey">B</paper-button>
-          <paper-button raised on-tap="pressKey">N</paper-button>
-          <paper-button raised on-tap="pressKey">M</paper-button>
-          <paper-button raised on-tap="pressKey">,</paper-button>
-          <paper-button raised on-tap="pressKey">.</paper-button>
+          <paper-button raised noink on-tap="pressKey">Z</paper-button>
+          <paper-button raised noink on-tap="pressKey">X</paper-button>
+          <paper-button raised noink on-tap="pressKey">C</paper-button>
+          <paper-button raised noink on-tap="pressKey">V</paper-button>
+          <paper-button raised noink on-tap="pressKey">B</paper-button>
+          <paper-button raised noink on-tap="pressKey">N</paper-button>
+          <paper-button raised noink on-tap="pressKey">M</paper-button>
+          <paper-button raised noink on-tap="pressKey">,</paper-button>
+          <paper-button raised noink on-tap="pressKey">.</paper-button>
         </div>
         <div class="row bottomRowPad">
           <paper-icon-button icon="close" class="cancel" on-tap="cancelItem"></paper-icon-button>
