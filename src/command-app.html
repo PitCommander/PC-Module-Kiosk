@@ -24,94 +24,81 @@
 <dom-module id="command-app">
   <template>
     <style>
-     :host {
-      --app-primary-color: #d35401;
-      --app-secondary-color: black;
-      display: block;
-    }
-    
-    @media only screen and (min-width: 1824px) {
+      :host {
+        --app-primary-color: #d35401;
+        --app-secondary-color: #333;
+        display: block;
+      }
+      
       .header-text {
-        font-size: 50px;
-        ;
+        flex: none;
       }
+      
       paper-tab {
-        font-size: 50px;
+        font-size: 25px;
       }
-      h1 {
-        font-size: 50px;
-      }
-    }
-    
-    @media only screen and (max-width: 1823px) {
-      .header-text {
-        font-size: 20px;
-        ;
-      }
-      paper-tab {
-        font-size: 20px;
-      }
+      
       h1 {
         font-size: 20px;
       }
-    }
-    
-    app-header {
-      color: #fff;
-      background-color: var(--app-primary-color);
-    }
-    
-    app-header paper-icon-button {
-      --paper-icon-button-ink-color: white;
-    }
-    
-    paper-tabs {
-      --paper-tabs-selection-bar-color: black;
-      height: 100%;
-    }
-    
-    paper-tab {
-      --paper-tab-ink: #333;
-      text-transform: uppercase;
-      font-size: var(--big-text-size);
-    }
-    
-    .link {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      color: inherit;
-      text-decoration: inherit;
-      padding-right: 10px;
-      padding-left: 10px;
-    }
-    
-    .big {
-      --iron-icon-height: 50px;
-      --iron-icon-width: 50px;
-    }
+      
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+      
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+      
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #ddd;
+        height: 100%;
+        @apply(--layout-flex);
+      }
+      
+      paper-tab {
+        --paper-tab-ink: #ddd;
+        text-transform: uppercase;
+        font-size: var(--big-text-size);
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      
+      .link {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        color: inherit;
+        text-decoration: inherit;
+      }
+      
+      .big {
+        --iron-icon-height: 50px;
+        --iron-icon-width: 50px;
+      }
     </style>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
     <app-drawer-layout fullbleed force-narrow>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-        <app-header fixed id="header">
+        <app-header shadow fixed id="header">
           <app-toolbar>
             <div main-title class="header-text">
               <iron-icon class="big" icon="my-icons:snake"></iron-icon>
             </div>
-            <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation">
-              <paper-tab link name="checklist">
-                <a href="/checklist" class="link" tabindex="-1">Checklist</a>
+            <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation" autoselect autoselect-delay="0">
+              <paper-tab link name="checklist">Checklist
               </paper-tab>
-              <paper-tab link name="match">
-                <a href="/match" class="link" tabindex="-1">Match Data</a>
+              <paper-tab link name="match">Match Data
               </paper-tab>
-              <paper-tab link name="screen">
-                <a href="/screen" class="link" tabindex="-1">Screen Controls</a>
+              <paper-tab link name="screen">Screen Controls
               </paper-tab>
-              <paper-tab link name="safety">
-                <a href="/safety" class="link" tabindex="-1">Safety</a>
+              <paper-tab link name="safety">Safety
+              </paper-tab>
+              <paper-tab link name="safety">Battery
+              </paper-tab>
+              <paper-tab link name="safety">Scouting
               </paper-tab>
             </paper-tabs>
           </app-toolbar>
@@ -127,15 +114,15 @@
     </app-drawer-layout>
   </template>
   <script>
-  Polymer({
-    is: 'command-app',
-    properties: {
-      page: {
-        type: String,
-        value: "checklist",
-        reflectToAttribute: true,
+    Polymer({
+      is: 'command-app',
+      properties: {
+        page: {
+          type: String,
+          value: "checklist",
+          reflectToAttribute: true,
+        },
       },
-    },
-  });
+    });
   </script>
 </dom-module>

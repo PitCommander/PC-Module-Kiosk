@@ -3,27 +3,66 @@
 <dom-module id="match-view">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-      padding: 10px;
-    }
-    
-    .blue {
-      background: CornflowerBlue;
-    }
-    
-    .red {
-      background: Crimson;
-    }
-    
-    .bumperText {
-      color: white;
-      text-align: center;
-    }
-    
-    h1 {
-      font-size: 50px;
-    }
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      
+      .blue {
+        background: CornflowerBlue;
+        transition: all 1s linear;
+      }
+      
+      .red {
+        background: Crimson;
+        transition: all 1s linear;
+      }
+      
+      .redText {
+        color: crimson;
+        transition: all 1s linear;
+      }
+      
+      .blueText {
+        color: cornflowerblue;
+        transition: all 1s linear;
+      }
+      
+      .bumperText {
+        color: white;
+        text-align: center;
+      }
+      
+      h1 {
+        font-size: 50px;
+      }
+      
+      .showing {
+        animation: fadein 2s;
+      }
+      
+      .invisible {
+        animation: fadeout 2s;
+        opacity: 0;
+      }
+      
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      @keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
     </style>
     <div class="card">
       <h1 style="text-align: center;">Current record: {{record}}</h1>
@@ -35,67 +74,66 @@
       <h1>Leave for match in: {{ttz}}</h1>
     </div>
     <div class="card" id='bumpers'>
-      <h1>Allies: {{allies}}</h1>
-      <h1>Opponents: {{oppo}}</h1>
+      <h1 id="allies">Allies: {{allies}}</h1>
+      <h1 id="opponents">Opponents: {{oppo}}</h1>
     </div>
     <div class="card" id='bumpers'>
       <h1 class="bumperText">Robot needs {{bumperColor}} bumpers</h1>
     </div>
   </template>
   <script>
-  Polymer({
-    is: 'match-view',
-    properties: {
-      record: {
-        type: String,
-        value: '0-0-0'
+    Polymer({
+      is: 'match-view',
+      properties: {
+        record: {
+          type: String,
+          value: '0-0-0'
+        },
+        nextNum: {
+          type: String,
+          value: 'Q1'
+        },
+        ttz: {
+          type: String,
+          value: ''
+        },
+        scheduledTime: {
+          type: String,
+          value: '3:50 PM'
+        },
+        predictedTime: {
+          type: String,
+          value: '3:52 PM'
+        },
+        bumperColor: {
+          type: String,
+          value: 'blue',
+          observer: '_bumperHandler'
+        },
+        allies: {
+          type: String,
+          value: '1, 2',
+        },
+        oppo: {
+          type: String,
+          value: '3, 4, 5',
+        },
       },
-      nextNum: {
-        type: String,
-        value: 'Q1'
-      },
-      ttz: {
-        type: String,
-        value: ''
-      },
-      scheduledTime: {
-        type: String,
-        value: '3:50 PM'
-      },
-      predictedTime: {
-        type: String,
-        value: '3:52 PM'
-      },
-      bumperColor: {
-        type: String,
-        value: 'blue',
-        observer: '_bumperHandler'
-      },
-      allies: {
-        type: String,
-        value: '1, 2',
-      },
-      oppo: {
-        type: String,
-        value: '3, 4, 5'
-      }
-    },
 
-    _bumperHandler: function() {
-      currentColor = this.bumperColor.toLowerCase();
+      _bumperHandler: function () {
+        var currentColor = this.bumperColor.toLowerCase();
 
-      if (currentColor == 'red') {
-        this.$.bumpers.classList.remove('blue');
-        this.$.bumpers.classList.add('red');
-      } else if (currentColor == 'blue') {
-        this.$.bumpers.classList.remove('red');
-        this.$.bumpers.classList.add('blue');
-      } else {
-        this.$.bumpers.classList.remove('red');
-        this.$.bumpers.classList.remove('blue');
-        this.$.bumpers.visibility = 'hidden';
-      }
-    }
-  });
+        var isRed = (currentColor == 'red')
+        var isBlue = (currentColor == 'blue')
+        this.toggleClass('redText', isRed, this.$.allies);
+        this.toggleClass('blueText', isBlue, this.$.allies);
+        this.toggleClass('redText', isBlue, this.$.opponents);
+        this.toggleClass('blueText', isRed, this.$.opponents);
+        this.toggleClass('blue', isBlue, this.$.bumpers);
+        this.toggleClass('red', isRed, this.$.bumpers);
+
+      },
+
+    });
   </script>
 </dom-module>

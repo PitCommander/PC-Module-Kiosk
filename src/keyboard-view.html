@@ -5,88 +5,91 @@
 <dom-module id="keyboard-view">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-      padding: 0px;
-    }
-    
-    .keys {
-      position: fixed;
-      bottom: 0px;
-      min-width: calc(100% - 80px);
-      left: 0px;
-    }
-    
-    .row {
-      padding: 5px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-justified);
-    }
-    
-    .mainRowPad {
-      padding-left: 2%;
-    }
-    
-    .lowerRowPad {
-      padding-left: 5%;
-    }
-    
-    .bottomRowPad {
-      padding-left: 2%;
-    }
-    
-    .container {
-      @apply(--layout-vertical);
-    }
-    
-    .container div {
-      @apply(--layout-flex);
-    }
-    
-    paper-button {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 5px;
-      padding: 5px;
-      min-width: 80px;
-    }
-    
-    paper-icon-button {
-      border-radius: 30px;
-      width: 60px;
-      height: 60px;
-      color: white;
-      margin: 10px;
-    }
-    
-    .cancel {
-      background: Crimson;
-    }
-    
-    .confirm {
-      background: ForestGreen;
-    }
-    
-    .spacebar {
-      min-width: 600px;
-    }
-    
-    h1 {
-      font-size: 50px;
-    }
-    
-    paper-input {
-      --paper-input-container-input: {
-        font-size: 30px;
+      :host {
+        display: block;
+        padding: 0px;
       }
-      ;
-      --paper-input-container-focus-color: var(--app-primary-color);
-    }
+      
+      .keys {
+        position: fixed;
+        bottom: 0px;
+        min-width: calc(100% - 80px);
+        left: 0px;
+      }
+      
+      .row {
+        padding: 5 0 5 0;
+        margin: 5 0 5 0;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+      
+      .mainRowPad {
+        padding-left: 2%;
+      }
+      
+      .lowerRowPad {
+        padding-left: 5%;
+      }
+      
+      .bottomRowPad {
+        padding-left: 2%;
+      }
+      
+      .container {
+        @apply(--layout-vertical);
+      }
+      
+      .container div {
+        @apply(--layout-flex);
+      }
+      
+      paper-button {
+        font-size: 45px;
+        font-weight: bold;
+        margin: 5px;
+        padding: 5px;
+        min-width: 80px;
+      }
+      
+      paper-icon-button {
+        border-radius: 30px;
+        width: 60px;
+        height: 60px;
+        color: white;
+        margin: 10px;
+      }
+      
+      .cancel {
+        background: Crimson;
+      }
+      
+      .confirm {
+        background: ForestGreen;
+      }
+      
+      .spacebar {
+        min-width: 600px;
+      }
+      
+      h1 {
+        font-size: 50px;
+      }
+      
+      paper-input {
+        --paper-input-container-input: {
+          font-size: 30px;
+        }
+        --paper-input-container-label: {
+          font-size: 30px;
+        }
+        --paper-input-container-focus-color: var(--app-primary-color);
+      }
     </style>
     <div class="container">
       <div class="card">
-        <h1 style="text-align: center;">Add Checklist Item</h1>
-        <paper-input label="New Checklist Item" value="{{itemText}}"></paper-input>
+        <h1 style="text-align: center;">Match Checklist Item</h1>
+        <paper-input label="Add text here to make a new match checklist item" value="{{itemText}}"></paper-input>
       </div>
       <div class="card keys">
         <div class="row">
@@ -148,56 +151,56 @@
     </div>
   </template>
   <script>
-  Polymer({
-    is: 'keyboard-view',
-    properties: {
-      itemText: {
-        type: String,
-        value: ''
+    Polymer({
+      is: 'keyboard-view',
+      properties: {
+        itemText: {
+          type: String,
+          value: ''
+        },
       },
-    },
 
-    pressKey: function(e) {
-      var rawText = e.target.textContent;
-      var cleanText = this.trim(rawText);
+      pressKey: function (e) {
+        var rawText = e.target.textContent;
+        var cleanText = this.trim(rawText);
 
-      if (this.itemText.length == 0) {
-        this.itemText = this.itemText + cleanText;
-      } else {
-        cleanText = cleanText.toLocaleLowerCase();
-        this.itemText = this.itemText + cleanText;
+        if (this.itemText.length == 0) {
+          this.itemText = this.itemText + cleanText;
+        } else {
+          cleanText = cleanText.toLocaleLowerCase();
+          this.itemText = this.itemText + cleanText;
+        }
+      },
+
+      pressBack: function () {
+        this.itemText = this.itemText.substring(0, this.itemText.length - 1);
+      },
+
+      pressSpace: function () {
+        this.itemText = this.itemText + ' ';
+      },
+
+      submitItem: function () {
+        var newItem = {
+          'text': this.itemText,
+          'status': false
+        };
+
+        var checklist = document.querySelector('checklist-view');
+        checklist.push('items', newItem);
+        console.log(checklist.items);
+        this.itemText = '';
+        document.querySelector('command-app').page = 'checklist';
+      },
+
+      cancelItem: function () {
+        this.itemText = '';
+        document.querySelector('command-app').page = 'checklist';
+      },
+
+      trim: function (s) {
+        return (s || '').replace(/^\s+|\s+$/g, '');
       }
-    },
-
-    pressBack: function() {
-      this.itemText = this.itemText.substring(0, this.itemText.length - 1);
-    },
-
-    pressSpace: function() {
-      this.itemText = this.itemText + ' ';
-    },
-
-    submitItem: function() {
-      var newItem = {
-        'text': this.itemText,
-        'status': false
-      };
-
-      var checklist = document.querySelector('checklist-view');
-      checklist.push('items', newItem);
-      console.log(checklist.items);
-      this.itemText = '';
-      document.querySelector('command-app').page = 'checklist';
-    },
-
-    cancelItem: function() {
-      this.itemText = '';
-      document.querySelector('command-app').page = 'checklist';
-    },
-
-    trim: function(s) {
-      return (s || '').replace(/^\s+|\s+$/g, '');
-    }
-  });
+    });
   </script>
 </dom-module>
