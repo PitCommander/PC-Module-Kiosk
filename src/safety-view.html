@@ -7,10 +7,6 @@
       display: block;
       padding: 10px;
     }
-      
-      iron-icon {
-        viewBox="0 0 100 100"
-      }
     </style>
     <div class="card">
       <h1>Safety</h1>
@@ -20,6 +16,22 @@
   <script>
   Polymer({
     is: 'safety-view',
+    properties: {
+      items: {
+        type: Array,
+        value: []
+      },
+    },
+    displayIndex: function(index) {
+      return index + 1;
+    },
+    ready: function() {
+      sendChecklistRequest('safety');
+    },
+
+    addItem: function() {
+      document.querySelector('command-app').page = 'keyboard';
+    }
   });
   </script>
 </dom-module>

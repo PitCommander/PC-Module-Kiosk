@@ -1,9 +1,9 @@
 {
-  "name": "pit-commander-app",
+  "name": "pc-module-kiosk",
   "authors": [
     "FRC Team 401"
   ],
-  "license": "GNU-GPLv3",
+  "license": "GPL-3.0",
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^0.10.0",
     "app-route": "PolymerElements/app-route#^0.9.0",
@@ -25,9 +25,6 @@
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "paper-input": "PolymerElements/paper-input#^2.0.0",
     "paper-card": "PolymerElements/paper-card#^2.0.0"
-  },
-  "devDependencies": {
-    "web-component-tester": "^4.0.0"
   },
   "private": true,
   "resolutions": {

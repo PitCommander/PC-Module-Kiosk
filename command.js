@@ -1,7 +1,14 @@
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'pub' );
 
-sock.bind( 'tcp://*:5800' );
+//using 5802 to allow testing without conflicting port bindings.
+sock.bind( 'tcp://*:5802' );
+
+function sendPacket( packet ) {
+  var stringPacket = JSON.stringify( packet );
+  //console.log( stringPacket );
+  sock.send( stringPacket );
+}
 
 function addCheclistItem() {}
 
@@ -17,9 +24,16 @@ function sendChecklistItem( name, value ) {
   sendPacket( message );
 }
 
-function sendChecklistRequest() {
-  var message = {
-    id: 'FETCH_CHECKLIST'
+function sendChecklistRequest( type ) {
+
+  if ( type == 'safety' ) {
+    var message = {
+      id: 'FETCH_SAFETY'
+    }
+  } else if ( type == 'match' ) {
+    var message = {
+      id: 'FETCH_CHECKLIST'
+    }
   }
 
   sendPacket( message );
@@ -38,12 +52,6 @@ function sendTvPacket( name, selected, mute, volume, power ) {
   }
 
   sendPacket( message );
-}
-
-function sendPacket( packet ) {
-  var stringPacket = JSON.stringify( packet );
-  console.log( stringPacket );
-  sock.send( stringPacket );
 }
 
 sock.on( 'message', function( message ) {
