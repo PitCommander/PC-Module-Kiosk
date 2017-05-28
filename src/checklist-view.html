@@ -30,55 +30,17 @@
   <script>
   Polymer({
     is: 'checklist-view',
+    properties: {
+      items: {
+        type: Array,
+        value: []
+      },
+    },
     displayIndex: function(index) {
       return index + 1;
     },
     ready: function() {
-      this.items = [{
-          text: 'Tower moves in and out without issue.',
-          status: false
-        },
-        {
-          text: 'Gear holder servos both move to correct positions.',
-          status: false
-        },
-        {
-          text: 'Gear holder pneumatic opens and closes.',
-          status: false
-        },
-        {
-          text: 'All drive module wheels and motors spin.',
-          status: false
-        },
-        {
-          text: 'All drive modules toggle mode.',
-          status: false
-        },
-        {
-          text: 'Intake opens and spins.',
-          status: false
-        },
-        {
-          text: 'Hopper bottom, kicker roller, and shooter wheel all spin.',
-          status: false
-        },
-        {
-          text: 'Air pressure is above 110 PSI.',
-          status: false
-        },
-        {
-          text: 'Fresh battery is installed.',
-          status: false
-        },
-        {
-          text: 'Driver Station charger is on cart.',
-          status: false
-        },
-        {
-          text: 'Correct color bumpers on robot.',
-          status: false
-        }
-      ];
+      sendChecklistRequest();
     },
 
     addItem: function() {

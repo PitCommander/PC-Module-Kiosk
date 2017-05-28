@@ -125,20 +125,14 @@
     },
 
     sendPacket: function() {
-      var packet = {};
-
-      packet.name = this.name;
-      packet.selected = this.selected;
-      packet.mute = this.mute;
-      packet.power = this.power;
-
-      console.log(JSON.stringify(packet));
+      var volume = '';
+      sendTvPacket(this.name, this.selected, this.mute, volume, this.power);
     },
     volumeSender: function(volume) {
       var packet = {
         'volume': volume
       };
-      console.log(JSON.stringify(packet));
+      sendTvPacket(this.name, this.selected, this.mute, volume, this.power);
     },
 
     computeClass: function(f) {
