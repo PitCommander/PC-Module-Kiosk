@@ -77,7 +77,7 @@
       </div>
       <paper-button-group selected="{{selected}}">
         <paper-button raised toggles name="stream">Video Stream</paper-button>
-        <paper-button raised toggles name="record">Team Record</paper-button>
+        <paper-button raised toggles name="schedule">Team Schedule</paper-button>
         <paper-button raised toggles name="timer">Match Timer</paper-button>
         <paper-button raised toggles name="specs">Robot Specs</paper-button>
         <paper-button raised toggles name="logo">Logo Screen</paper-button>
@@ -91,7 +91,7 @@
       name: String,
       selected: {
         type: String,
-        observer: 'sendPacket'
+        observer: 'iconTap'
       },
       mute: {
         type: Boolean,
@@ -104,8 +104,13 @@
     },
 
     iconTap: function(e) {
-      var icon = e.target.parentElement.id;
+      try {
+        var icon = e.target.parentElement.id;
+      } catch (err) {
 
+      }
+
+      var volume = ''
       switch (icon) {
         case 'mute':
           this.mute = !this.mute;
@@ -114,24 +119,16 @@
           this.power = !this.power;
           break;
         case 'volDown':
-          this.volumeSender('down');
+          volume = 'down';
           break;
         case 'volUp':
-          this.voluemSender('up')
+          volume = 'up';
           break;
       }
-
-      this.sendPacket();
+      this.sendPacket(volume);
     },
 
-    sendPacket: function() {
-      var volume = '';
-      sendTvPacket(this.name, this.selected, this.mute, volume, this.power);
-    },
-    volumeSender: function(volume) {
-      var packet = {
-        'volume': volume
-      };
+    sendPacket: function(volume) {
       sendTvPacket(this.name, this.selected, this.mute, volume, this.power);
     },
 

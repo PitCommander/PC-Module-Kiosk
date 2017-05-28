@@ -1,7 +1,7 @@
 var zmq = require( 'zeromq' ),
-  sock = zmq.socket( 'req' );
+  sock = zmq.socket( 'pub' );
 
-sock.connect( 'tcp://172.0.0.2:5801' );
+sock.bind( 'tcp://*:5800' );
 
 function addCheclistItem() {}
 
