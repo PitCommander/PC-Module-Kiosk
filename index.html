@@ -11,9 +11,10 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#d35401">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Pit401">
+  <meta name="application-name" content="PC-KIOSK">
   <script src="announce.js"></script>
   <script src="command.js"></script>
+  <script src="handlers.js"></script>
   <script>
   window.Polymer = {
     dom: 'shady',
@@ -36,7 +37,7 @@
     onload();
   })();
   </script>
-  <link rel="import" href="src/command-app.html">
+  <link rel="import" href="src/kiosk-app.html">
   <style>
   body {
     @apply(--layout-fullbleed);
@@ -55,7 +56,7 @@
 </head>
 
 <body>
-  <command-app></command-app>
+  <kiosk-app></kiosk-app>
 </body>
 
 </html>

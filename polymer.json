@@ -4,8 +4,8 @@
   "fragments": [
     "src/checklist-view.html",
     "src/match-view.html",
-    "src/safety-view.html",
-    "src/screen-view.html"
+    "src/screen-view.html",
+    "src/keyboard-view.html",
   ],
   "sources": [
     "src/**/*",

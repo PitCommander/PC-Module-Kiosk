@@ -1,5 +1,5 @@
 {
-  "name": "PC-Module-Kiosk",
+  "name": "pc-module-piosk",
   "short_name": "PC-Kiosk",
   "start_url": "/?homescreen=1",
   "display": "standalone",

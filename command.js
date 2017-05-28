@@ -6,15 +6,21 @@ sock.bind( 'tcp://*:5802' );
 
 function sendPacket( packet ) {
   var stringPacket = JSON.stringify( packet );
-  //console.log( stringPacket );
+  console.log( stringPacket );
   sock.send( stringPacket );
 }
 
-function addCheclistItem() {}
+function sendChecklistItem( type, name, value ) {
+  var packetID = '';
 
-function sendChecklistItem( name, value ) {
+  if ( type == 'Safety' ) {
+    packetID = 'SAFETY_LIST_ADD';
+  } else if ( type == 'Match' ) {
+    packetID = 'MATCH_LIST_ADD';
+  }
+
   var message = {
-    id: 'CHECKLIST_ADD',
+    id: packetID,
     payload: {
       name: name,
       value: value
@@ -25,14 +31,15 @@ function sendChecklistItem( name, value ) {
 }
 
 function sendChecklistRequest( type ) {
+  var message = {};
 
   if ( type == 'safety' ) {
-    var message = {
-      id: 'FETCH_SAFETY'
+    message = {
+      id: 'FETCH_SAFETY_LIST'
     }
   } else if ( type == 'match' ) {
-    var message = {
-      id: 'FETCH_CHECKLIST'
+    message = {
+      id: 'FETCH_MATCH_LIST'
     }
   }
 
@@ -55,13 +62,20 @@ function sendTvPacket( name, selected, mute, volume, power ) {
 }
 
 sock.on( 'message', function( message ) {
+  var checklists = document.querySelectorAll( 'checklist-view' );
+  var matchChecklist = checklists[ 0 ];
+  var safetyChecklist = checklists[ 1 ];
+
   var messageObj = JSON.parse( message );
+  var data = messageObj.payload;
 
   switch ( messageObj.id ) {
-    case 'CHECKLIST_DATA':
-      var data = messageObj.payload;
-      var checklist = document.querySelector( 'checklist-view' );
+    case 'MATCH_LIST_DATA':
+      matchChecklist.set( 'items', data );
+      break;
+    case 'SAFETY_LIST_DATA':
+      safetyChecklist.set( 'items', data );
+      break;
 
-      checklist.set( 'items', data );
   }
 } )

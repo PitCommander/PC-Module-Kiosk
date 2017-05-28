@@ -19,63 +19,62 @@
 <link rel="import" href="checklist-view.html">
 <link rel="import" href="match-view.html">
 <link rel="import" href="screen-view.html">
-<link rel="import" href="safety-view.html">
 <link rel="import" href="keyboard-view.html">
-<dom-module id="command-app">
+<dom-module id="kiosk-app">
   <template>
     <style>
-      :host {
-        --app-primary-color: #d35401;
-        --app-secondary-color: #333;
-        display: block;
-      }
-      
-      .header-text {
-        flex: none;
-      }
-      
-      paper-tab {
-        font-size: 25px;
-      }
-      
-      h1 {
-        font-size: 20px;
-      }
-      
-      app-header {
-        color: #fff;
-        background-color: var(--app-primary-color);
-      }
-      
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
-      
-      paper-tabs {
-        --paper-tabs-selection-bar-color: #ddd;
-        height: 100%;
-        @apply(--layout-flex);
-      }
-      
-      paper-tab {
-        --paper-tab-ink: #ddd;
-        text-transform: uppercase;
-        font-size: var(--big-text-size);
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-      
-      .link {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        color: inherit;
-        text-decoration: inherit;
-      }
-      
-      .big {
-        --iron-icon-height: 50px;
-        --iron-icon-width: 50px;
-      }
+     :host {
+      --app-primary-color: #d35401;
+      --app-secondary-color: #333;
+      display: block;
+    }
+
+    .header-text {
+      flex: none;
+    }
+
+    paper-tab {
+      font-size: 25px;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    app-header {
+      color: #fff;
+      background-color: var(--app-primary-color);
+    }
+
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
+
+    paper-tabs {
+      --paper-tabs-selection-bar-color: #ddd;
+      height: 100%;
+      @apply(--layout-flex);
+    }
+
+    paper-tab {
+      --paper-tab-ink: #ddd;
+      text-transform: uppercase;
+      font-size: var(--big-text-size);
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .link {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      color: inherit;
+      text-decoration: inherit;
+    }
+
+    .big {
+      --iron-icon-height: 50px;
+      --iron-icon-width: 50px;
+    }
     </style>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
@@ -88,13 +87,13 @@
               <iron-icon class="big" icon="my-icons:snake"></iron-icon>
             </div>
             <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation" autoselect autoselect-delay="0">
-              <paper-tab link name="checklist">Checklist
+              <paper-tab link name="Match">Checklist
               </paper-tab>
-              <paper-tab link name="match">Match Data
+              <paper-tab link name="counter">Match Data
               </paper-tab>
               <paper-tab link name="screen">Screen Controls
               </paper-tab>
-              <paper-tab link name="safety">Safety
+              <paper-tab link name="Safety">Safety
               </paper-tab>
               <paper-tab link name="safety">Battery
               </paper-tab>
@@ -103,26 +102,26 @@
             </paper-tabs>
           </app-toolbar>
         </app-header>
-        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="checklist" role="main" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
-          <checklist-view name="checklist" id="checklist"></checklist-view>
-          <match-view name="match"></match-view>
+        <neon-animated-pages selected="[[page]]" attr-for-selected="name" fallback-selection="counter" role="main" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+          <checklist-view name="Match" id="checklist"></checklist-view>
+          <match-view name="counter"></match-view>
           <screen-view name="screen"></screen-view>
-          <safety-view name="safety"></safety-view>
+          <checklist-view name="Safety"></checklist-view>
           <keyboard-view name="keyboard"></keyboard-view>
         </neon-animated-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
   <script>
-    Polymer({
-      is: 'command-app',
-      properties: {
-        page: {
-          type: String,
-          value: "checklist",
-          reflectToAttribute: true,
-        },
+  Polymer({
+    is: 'kiosk-app',
+    properties: {
+      page: {
+        type: String,
+        value: "counter",
+        reflectToAttribute: true,
       },
-    });
+    },
+  });
   </script>
 </dom-module>

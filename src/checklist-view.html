@@ -33,18 +33,26 @@
     properties: {
       items: {
         type: Array,
-        value: []
+        value: [{
+          'text': 'memes',
+          'status': true
+        }]
       },
+      name: {
+        type: String,
+        value: 'checklist',
+        reflectToAttribute: true,
+      }
     },
     displayIndex: function(index) {
       return index + 1;
     },
     ready: function() {
-      sendChecklistRequest('match');
+      sendChecklistRequest(this.name);
     },
 
     addItem: function() {
-      document.querySelector('command-app').page = 'keyboard';
+      callKeyboard(this.name);
     }
   });
   </script>
