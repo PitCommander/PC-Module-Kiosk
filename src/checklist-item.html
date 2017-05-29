@@ -3,47 +3,45 @@
 <dom-module id="checklist-item">
   <template>
     <style include="shared-styles">
-    .card-layout {
-      @apply(--layout-horizontal);
-    }
-    
-    .circle {
-      margin-top: 15px;
-    }
-    
-    h1 {
-      padding-left: 15px;
-      font-size: 30px;
-    }
-    
-    paper-checkbox.huge {
-      --paper-checkbox-size: 70px;
-      --paper-checkbox-checked-color: #d35401;
-    }
+      .card-layout {
+        @apply(--layout-horizontal);
+      }
+
+      .circle {
+        margin-top: 15px;
+      }
+
+      h1 {
+        padding-left: 15px;
+        font-size: 30px;
+      }
+
+      paper-checkbox.huge {
+        --paper-checkbox-size: 70px;
+        --paper-checkbox-checked-color: #d35401;
+      }
     </style>
     <div class="card card-layout">
       <div class="circle">{{num}}</div>
       <h1 class="flex-child">{{text}}</h1>
-      <paper-checkbox id="box" class="huge" on-tap='toggle'></paper-checkbox>
+      <paper-checkbox id="box" class="huge" checked='{{status}}'></paper-checkbox>
     </div>
   </template>
   <script>
-  Polymer({
-    is: 'checklist-item',
-    properties: {
-      num: Number,
-      text: String,
-      status: Boolean,
-    },
-    toggle: function() {
-      if (this.status) {
-        this.status = false;
-      } else {
-        this.status = true;
-      }
-
-      sendChecklistItem(this.text, this.status);
-    },
-  });
+    Polymer({
+      is: 'checklist-item',
+      properties: {
+        num: Number,
+        text: String,
+        type: String,
+        status: {
+          type: Boolean,
+          observer: 'toggle'
+        }
+      },
+      toggle: function () {
+        sendChecklistItem(this.type, this.text, this.status);
+      },
+    });
   </script>
 </dom-module>

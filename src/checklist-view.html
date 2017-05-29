@@ -5,55 +5,55 @@
 <dom-module id="checklist-view">
   <template>
     <style include="shared-styles">
-     :host {
-      display: block;
-      padding: 10px;
-    }
-    
-    .fab-button {
-      position: fixed;
-      bottom: 10px;
-      right: 50%;
-      right: calc(50% - 40px);
-      background: var(--app-primary-color);
-      color: white;
-      border-radius: 40px;
-      width: 80px;
-      height: 80px;
-    }
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .fab-button {
+        position: fixed;
+        bottom: 10px;
+        right: 50%;
+        right: calc(50% - 40px);
+        background: var(--app-primary-color);
+        color: white;
+        border-radius: 40px;
+        width: 80px;
+        height: 80px;
+      }
     </style>
     <template is="dom-repeat" items="{{items}}">
-      <checklist-item num="{{displayIndex(index)}}" text="{{item.text}}" status="{{item.status}}"></checklist-item>
+      <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.text}}" status="{{item.status}}"></checklist-item>
     </template>
     <paper-icon-button icon="add" class="fab-button" on-tap="addItem"></paper-icon-button>
   </template>
   <script>
-  Polymer({
-    is: 'checklist-view',
-    properties: {
-      items: {
-        type: Array,
-        value: [{
-          'text': 'memes',
-          'status': true
+    Polymer({
+      is: 'checklist-view',
+      properties: {
+        items: {
+          type: Array,
+          value: [{
+            'text': 'Test checklist item',
+            'status': true
         }]
+        },
+        name: {
+          type: String,
+          value: 'checklist',
+          reflectToAttribute: true,
+        }
       },
-      name: {
-        type: String,
-        value: 'checklist',
-        reflectToAttribute: true,
-      }
-    },
-    displayIndex: function(index) {
-      return index + 1;
-    },
-    ready: function() {
-      sendChecklistRequest(this.name);
-    },
+      displayIndex: function (index) {
+        return index + 1;
+      },
+      ready: function () {
+        sendChecklistRequest(this.name);
+      },
 
-    addItem: function() {
-      callKeyboard(this.name);
-    }
-  });
+      addItem: function () {
+        callKeyboard(this.name);
+      }
+    });
   </script>
 </dom-module>

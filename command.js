@@ -1,22 +1,23 @@
-var zmq = require( 'zeromq' ),
-  sock = zmq.socket( 'pub' );
+var zmq = require('zeromq'),
+  sock = zmq.socket('pub');
 
 //using 5802 to allow testing without conflicting port bindings.
-sock.bind( 'tcp://*:5802' );
+sock.bind('tcp://*:5802');
 
-function sendPacket( packet ) {
-  var stringPacket = JSON.stringify( packet );
-  console.log( stringPacket );
-  sock.send( stringPacket );
+function sendPacket(packet) {
+  var stringPacket = JSON.stringify(packet);
+  console.log(stringPacket);
+  sock.send(stringPacket);
 }
 
-function sendChecklistItem( type, name, value ) {
+
+function addChecklistItem(type, name, value) {
   var packetID = '';
 
-  if ( type == 'Safety' ) {
-    packetID = 'SAFETY_LIST_ADD';
-  } else if ( type == 'Match' ) {
-    packetID = 'MATCH_LIST_ADD';
+  if (type == 'Safety') {
+    packetID = 'CHECKLIST_SAFETY_ADD';
+  } else if (type == 'Match') {
+    packetID = 'CHECKLIST_MATCH_ADD';
   }
 
   var message = {
@@ -27,26 +28,46 @@ function sendChecklistItem( type, name, value ) {
     }
   };
 
-  sendPacket( message );
+  sendPacket(message);
 }
 
-function sendChecklistRequest( type ) {
-  var message = {};
+function sendChecklistItem(type, name, value) {
+  var packetID = '';
 
-  if ( type == 'safety' ) {
-    message = {
-      id: 'FETCH_SAFETY_LIST'
+  if (type == 'Safety') {
+    packetID = 'CHECKLIST_SAFETY_TOGGLE';
+  } else if (type == 'Match') {
+    packetID = 'CHECKLIST_MATCH_TOGGLE';
+  }
+
+  var message = {
+    id: packetID,
+    payload: {
+      name: name,
+      value: value
     }
-  } else if ( type == 'match' ) {
+  };
+
+  sendPacket(message);
+}
+
+function sendChecklistRequest(type) {
+  var message = {}
+
+  if (type == 'Safety') {
     message = {
-      id: 'FETCH_MATCH_LIST'
+      id: 'FETCH_CHECKLIST_SAFETY'
+    }
+  } else if (type == 'Match') {
+    message = {
+      id: 'FETCH_CHECKLIST_MATCH'
     }
   }
 
-  sendPacket( message );
+  sendPacket(message);
 }
 
-function sendTvPacket( name, selected, mute, volume, power ) {
+function sendTvPacket(name, selected, mute, volume, power) {
   var message = {
     id: 'TV_SET',
     payload: {
@@ -58,24 +79,35 @@ function sendTvPacket( name, selected, mute, volume, power ) {
     }
   }
 
-  sendPacket( message );
+  sendPacket(message);
 }
 
-sock.on( 'message', function( message ) {
-  var checklists = document.querySelectorAll( 'checklist-view' );
-  var matchChecklist = checklists[ 0 ];
-  var safetyChecklist = checklists[ 1 ];
+sock.on('message', function (message) {
+  var checklists = document.querySelectorAll('checklist-view');
+  var matchChecklist = checklists[0];
+  var safetyChecklist = checklists[1];
 
-  var messageObj = JSON.parse( message );
+  var badToast = document.querySelector('.badToast');
+  var goodToast = document.querySelector('.goodToast');
+
+  var messageObj = JSON.parse(message);
   var data = messageObj.payload;
 
-  switch ( messageObj.id ) {
-    case 'MATCH_LIST_DATA':
-      matchChecklist.set( 'items', data );
-      break;
-    case 'SAFETY_LIST_DATA':
-      safetyChecklist.set( 'items', data );
-      break;
+  switch (messageObj.id) {
+  case 'GENERAL_ACK':
+    goodToast.text = data;
+    goodToast.open();
+    break;
+  case 'GENERAL_FAIL':
+    badToast.text = data;
+    badToast.open();
+    break;
+  case 'CHECKLIST_DATA_MATCH':
+    matchChecklist.set('items', data);
+    break;
+  case 'CHECKLIST_DATA_SAFETY':
+    safetyChecklist.set('items', data);
+    break;
 
   }
-} )
+})
