@@ -36,9 +36,11 @@
         type: String,
         status: {
           type: Boolean,
-          observer: 'toggle'
         }
       },
+      observers: [
+        'toggle(type, text, status)'
+      ],
       toggle: function () {
         sendChecklistItem(this.type, this.text, this.status);
       },

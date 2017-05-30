@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button-group/paper-button-group.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="keyboard-view">
   <template>
@@ -52,6 +53,15 @@
         min-width: 80px;
       }
 
+      paper-button[toggles][active] {
+        background: var(--app-primary-color);
+        color: white;
+      }
+
+      paper-button[toggles] {
+        @apply(--layout-flex);
+      }
+
       paper-icon-button {
         border-radius: 30px;
         width: 60px;
@@ -85,11 +95,22 @@
         }
         --paper-input-container-focus-color: var(--app-primary-color);
       }
+
+      paper-button-group {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
+      }
     </style>
     <div class="container">
       <div class="card">
         <h1 style="text-align: center;">{{caller}} Checklist Item</h1>
         <paper-input label="Add text here to make a new checklist item" value="{{itemText}}"></paper-input>
+      </div>
+      <div class="card">
+        <paper-button-group selected="{{selected}}">
+          <paper-button raised toggles name='single'>Single time add item</paper-button>
+          <paper-button raised toggles name='persist'>Permanantly add item</paper-button>
+        </paper-button-group>
       </div>
       <div class="card keys">
         <div class="row">
@@ -143,7 +164,7 @@
           <paper-button raised noink on-tap="pressKey">.</paper-button>
         </div>
         <div class="row bottomRowPad">
-          <paper-icon-button icon="close" class="cancel" on-tap="cancelItem"></paper-icon-button>
+          <paper-icon-button icon="close" class="cancel" on-tap="pageReturn"></paper-icon-button>
           <paper-button class="spacebar" raised on-tap="pressSpace"> </paper-button>
           <paper-icon-button icon="check" class="confirm" on-tap="submitItem"></paper-icon-button>
         </div>
@@ -161,6 +182,23 @@
         caller: {
           type: String,
           value: ''
+        },
+        persist: {
+          type: Boolean,
+          value: false
+        },
+        selected: {
+          type: String,
+          value: 'single',
+          observer: 'handlePersist'
+        }
+      },
+
+      handlePersist: function (e) {
+        if (this.selected === 'persist') {
+          this.persist = true;
+        } else {
+          this.persist = false;
         }
       },
 
@@ -198,14 +236,14 @@
         }
         checklist.push('items', newItem);
 
-        addChecklistItem(this.caller, this.itemText, false);
+        addChecklistItem(this.caller, this.itemText, this.persist);
 
-        this.itemText = '';
-        document.querySelector('kiosk-app').page = this.caller;
+        this.pageReturn();
       },
 
-      cancelItem: function () {
+      pageReturn: function () {
         this.itemText = '';
+        this.selected = 'single';
         document.querySelector('kiosk-app').page = this.caller;
       },
 
