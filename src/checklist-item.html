@@ -3,23 +3,23 @@
 <dom-module id="checklist-item">
   <template>
     <style include="shared-styles">
-      .card-layout {
-        @apply(--layout-horizontal);
-      }
+    .card-layout {
+      @apply(--layout-horizontal);
+    }
 
-      .circle {
-        margin-top: 15px;
-      }
+    .circle {
+      margin-top: 15px;
+    }
 
-      h1 {
-        padding-left: 15px;
-        font-size: 30px;
-      }
+    h1 {
+      padding-left: 15px;
+      font-size: 30px;
+    }
 
-      paper-checkbox.huge {
-        --paper-checkbox-size: 70px;
-        --paper-checkbox-checked-color: #d35401;
-      }
+    paper-checkbox.huge {
+      --paper-checkbox-size: 70px;
+      --paper-checkbox-checked-color: #d35401;
+    }
     </style>
     <div class="card card-layout">
       <div class="circle">{{num}}</div>
@@ -28,17 +28,17 @@
     </div>
   </template>
   <script>
-    Polymer({
-      is: 'checklist-item',
-      properties: {
-        num: Number,
-        text: String,
-        type: String,
-        status: Boolean,
-      },
-      toggle: function () {
-        sendChecklistItem(this.type, this.text, this.status);
-      },
-    });
+  Polymer({
+    is: 'checklist-item',
+    properties: {
+      num: Number,
+      text: String,
+      type: String,
+      status: Boolean,
+    },
+    toggle: function() {
+      sendChecklistItem(this.type, this.text, this.status);
+    },
+  });
   </script>
 </dom-module>

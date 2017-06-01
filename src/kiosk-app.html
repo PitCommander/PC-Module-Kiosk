@@ -24,72 +24,72 @@
 <dom-module id="kiosk-app">
   <template>
     <style>
-      :host {
-        --app-primary-color: #d35401;
-        --app-secondary-color: #333;
-        display: block;
-      }
+     :host {
+      --app-primary-color: #d35401;
+      --app-secondary-color: #333;
+      display: block;
+    }
 
-      .header-text {
-        flex: none;
-      }
+    .header-text {
+      flex: none;
+    }
 
-      paper-tab {
-        font-size: 25px;
-      }
+    paper-tab {
+      font-size: 25px;
+    }
 
-      h1 {
-        font-size: 20px;
-      }
+    h1 {
+      font-size: 20px;
+    }
 
-      app-header {
-        color: #fff;
-        background-color: var(--app-primary-color);
-      }
+    app-header {
+      color: #fff;
+      background-color: var(--app-primary-color);
+    }
 
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
 
-      paper-tabs {
-        --paper-tabs-selection-bar-color: #ddd;
-        height: 100%;
-        @apply(--layout-flex);
-      }
+    paper-tabs {
+      --paper-tabs-selection-bar-color: #ddd;
+      height: 100%;
+      @apply(--layout-flex);
+    }
 
-      paper-tab {
-        --paper-tab-ink: #ddd;
-        text-transform: uppercase;
-        font-size: var(--big-text-size);
-        padding-left: 10px;
-        padding-right: 10px;
-      }
+    paper-tab {
+      --paper-tab-ink: #ddd;
+      text-transform: uppercase;
+      font-size: var(--big-text-size);
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 
-      .link {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        color: inherit;
-        text-decoration: inherit;
-      }
+    .link {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      color: inherit;
+      text-decoration: inherit;
+    }
 
-      .big {
-        --iron-icon-height: 50px;
-        --iron-icon-width: 50px;
-      }
+    .big {
+      --iron-icon-height: 50px;
+      --iron-icon-width: 50px;
+    }
 
-      paper-toast {
-        font-size: 20px;
-      }
+    paper-toast {
+      font-size: 20px;
+    }
 
-      .goodToast {
-        --paper-toast-background-color: ForestGreen;
-        --paper-toast-color: white;
-      }
+    .goodToast {
+      --paper-toast-background-color: ForestGreen;
+      --paper-toast-color: white;
+    }
 
-      .badToast {
-        --paper-toast-background-color: Crimson;
-        --paper-toast-color: white;
-      }
+    .badToast {
+      --paper-toast-background-color: Crimson;
+      --paper-toast-color: white;
+    }
     </style>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
@@ -130,15 +130,15 @@
     </app-drawer-layout>
   </template>
   <script>
-    Polymer({
-      is: 'kiosk-app',
-      properties: {
-        page: {
-          type: String,
-          value: "counter",
-          reflectToAttribute: true,
-        },
+  Polymer({
+    is: 'kiosk-app',
+    properties: {
+      page: {
+        type: String,
+        value: "counter",
+        reflectToAttribute: true,
       },
-    });
+    },
+  });
   </script>
 </dom-module>
