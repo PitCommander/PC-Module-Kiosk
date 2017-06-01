@@ -49,6 +49,26 @@
         color: white;
       }
 
+      paper-slider {
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        --paper-slider-knob-color: var(--app-primary-color);
+        --paper-slider-active-color: var(--app-primary-color);
+        --paper-slider-pin-color: var(--app-primary-color);
+        --paper-slider-height: 6px;
+        background: WhiteSmoke;
+        padding: 15px 0px 15px 0px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
+      iron-icon {
+        background: WhiteSmoke;
+        padding: 8px 0px 8px 0px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
       @media only screen and (max-width: 1823px) {
         paper-button {
           margin-bottom: 10px;
@@ -58,15 +78,6 @@
           text-align: center;
           font-size: 40px;
         }
-      }
-
-      paper-slider {
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-        --paper-slider-knob-color: var(--app-primary-color);
-        --paper-slider-active-color: var(--app-primary-color);
-        --paper-slider-pin-color: var(--app-primary-color);
-        --paper-slider-height: 6px;
       }
 
       @media only screen and (min-width: 1824px) {
@@ -105,8 +116,7 @@
       properties: {
         name: String,
         selected: {
-          type: String,
-          observer: 'sendPacket'
+          type: String
         },
         mute: {
           type: Boolean,
@@ -131,6 +141,9 @@
           value: "av:volume-down"
         }
       },
+      observers: [
+        "sendPacket(name, selected, volume, power)"
+      ],
 
       iconHandler: function () {
         if (this.volume === 0) {
@@ -153,7 +166,7 @@
         } else {
           this.volume = this.muteVolume;
         }
-        this.sendPacket();
+
       },
 
       iconTap: function (e) {
@@ -166,11 +179,10 @@
           this.power = !this.power;
           break;
         }
-        this.sendPacket();
       },
 
-      sendPacket: function () {
-        sendTvPacket(this.name, this.selected, this.volume, this.power);
+      sendPacket: function (name, selected, volume, power) {
+        sendTvPacket(name, selected, volume / 100, power);
       },
 
       computeClass: function (f) {
