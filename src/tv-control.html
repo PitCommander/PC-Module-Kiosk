@@ -2,76 +2,91 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-button-group/paper-button-group.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="tv-control">
   <template>
     <style include="shared-styles">
-    paper-button[toggles][active] {
-      background: var(--app-primary-color);
-      color: white;
-    }
-    
-    paper-button-group {
-      @apply(--layout-vertical);
-    }
-    
-    .tvHeader {
-      @apply(--layout-flex);
-      @apply(--layout-horizontal);
-    }
-    
-    .cecControls {
-      @apply(--layout-flex);
-      align-content: right;
-      align-items: right;
-      text-align: right;
-    }
-    
-    paper-icon-button {
-      border-radius: 40px;
-      width: 80px;
-      height: 80px;
-      --paper-icon-button-ink-color: var(--app-primary-color);
-    }
-    
-    .default {
-      background: WhiteSmoke;
-    }
-    
-    .on {
-      background: var(--app-primary-color);
-      color: white;
-    }
-    
-    @media only screen and (max-width: 1823px) {
-      paper-button {
-        margin-bottom: 10px;
-        font-size: 30px;
+      paper-button[toggles][active] {
+        background: var(--app-primary-color);
+        color: white;
       }
-      h1 {
-        text-align: center;
-        font-size: 40px;
+
+      paper-button-group {
+        @apply(--layout-vertical);
       }
-    }
-    
-    @media only screen and (min-width: 1824px) {
-      paper-button {
-        margin-bottom: 10px;
-        font-size: 50px;
+
+      .tvHeader {
+        @apply(--layout-flex);
+        @apply(--layout-horizontal);
       }
-      h1 {
-        text-align: center;
-        font-size: 50px;
+
+      .cecControls {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
+        @apply(--layout-center);
+        @apply(--layout-end-justified);
+        align-content: right;
+        align-items: right;
+        text-align: right;
       }
-    }
+
+      paper-icon-button {
+        @apply(--layout-center);
+        border-radius: 40px;
+        width: 80px;
+        height: 80px;
+        --paper-icon-button-ink-color: var(--app-primary-color);
+      }
+
+      .default {
+        background: WhiteSmoke;
+      }
+
+      .on {
+        background: var(--app-primary-color);
+        color: white;
+      }
+
+      @media only screen and (max-width: 1823px) {
+        paper-button {
+          margin-bottom: 10px;
+          font-size: 30px;
+        }
+        h1 {
+          text-align: center;
+          font-size: 40px;
+        }
+      }
+
+      paper-slider {
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        --paper-slider-knob-color: var(--app-primary-color);
+        --paper-slider-active-color: var(--app-primary-color);
+        --paper-slider-pin-color: var(--app-primary-color);
+        --paper-slider-height: 6px;
+      }
+
+      @media only screen and (min-width: 1824px) {
+        paper-button {
+          margin-bottom: 10px;
+          font-size: 50px;
+        }
+        h1 {
+          text-align: center;
+          font-size: 50px;
+        }
+      }
     </style>
     <div class="card">
       <div class="tvHeader">
         <h1>{{name}} TV</h1>
         <div class="cecControls">
+          <iron-icon class="big" icon="{{icon}}"></iron-icon>
+          <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]" step="1" expand></paper-slider>
           <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off" on-tap="iconTap"></paper-icon-button>
-          <paper-icon-button id="volDown" class="default" icon="av:volume-down" on-tap="iconTap"></paper-icon-button>
-          <paper-icon-button id="volUp" class="default" icon="av:volume-up" on-tap="iconTap"></paper-icon-button>
           <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new" on-tap="iconTap"></paper-icon-button>
         </div>
       </div>
@@ -85,56 +100,82 @@
     </div>
   </template>
   <script>
-  Polymer({
-    is: 'tv-control',
-    properties: {
-      name: String,
-      selected: {
-        type: String,
-        observer: 'iconTap'
+    Polymer({
+      is: 'tv-control',
+      properties: {
+        name: String,
+        selected: {
+          type: String,
+          observer: 'sendPacket'
+        },
+        mute: {
+          type: Boolean,
+          value: false,
+          observer: 'muteHandler'
+        },
+        power: {
+          type: Boolean,
+          value: false
+        },
+        volume: {
+          type: Number,
+          value: 50,
+          observer: "iconHandler"
+        },
+        muteVolume: {
+          type: Number,
+          value: 50
+        },
+        icon: {
+          type: String,
+          value: "av:volume-down"
+        }
       },
-      mute: {
-        type: Boolean,
-        value: false
-      },
-      power: {
-        type: Boolean,
-        value: false
-      }
-    },
 
-    iconTap: function(e) {
-      try {
+      iconHandler: function () {
+        if (this.volume === 0) {
+          this.icon = "av:volume-off";
+        } else if (this.volume > 0 && this.volume < 34) {
+          this.mute = (this.volume === 0);
+          this.icon = "av:volume-mute";
+        } else if (this.volume >= 34 && this.volume < 67) {
+          this.mute = (this.volume === 0);
+          this.icon = "av:volume-down";
+        } else if (this.volume >= 67 && this.volume <= 100) {
+          this.icon = "av:volume-up";
+          this.mute = (this.volume === 0);
+        }
+      },
+      muteHandler: function () {
+        if (this.mute) {
+          this.muteVolume = this.volume;
+          this.volume = 0;
+        } else {
+          this.volume = this.muteVolume;
+        }
+        this.sendPacket();
+      },
+
+      iconTap: function (e) {
         var icon = e.target.parentElement.id;
-      } catch (err) {
-
-      }
-
-      var volume = ''
-      switch (icon) {
+        switch (icon) {
         case 'mute':
           this.mute = !this.mute;
           break;
         case 'power':
           this.power = !this.power;
           break;
-        case 'volDown':
-          volume = 'down';
-          break;
-        case 'volUp':
-          volume = 'up';
-          break;
+        }
+        this.sendPacket();
+      },
+
+      sendPacket: function () {
+        sendTvPacket(this.name, this.selected, this.volume, this.power);
+      },
+
+      computeClass: function (f) {
+        return f ? "on" : "default";
       }
-      this.sendPacket(volume);
-    },
-
-    sendPacket: function(volume) {
-      sendTvPacket(this.name, this.selected, this.mute, volume, this.power);
-    },
-
-    computeClass: function(f) {
-      return f ? "on" : "default";
-    }
-  });
+    });
   </script>
 </dom-module>
