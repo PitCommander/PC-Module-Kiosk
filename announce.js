@@ -9,7 +9,7 @@ webFrame.setZoomLevelLimits( 1, 1 );
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'sub' );
 
-sock.connect( 'tcp://10.0.0.4:5800' );
+sock.connect( 'tcp://10.0.0.7:5800' );
 sock.subscribe( '' );
 
 //Message handler. Switch statement calls cases based on message type.
@@ -59,47 +59,22 @@ function handleTimeTick( data, matchView ) {
 //Handles match container updates.
 //This updates the next match, team record, scheduled time, predicted time, ally, and oppo fields on the match-view page.
 function handleMatchContainer( data, matchView ) {
-  matchView.nextNum = data.currentMatch.comp_level.toUpperCase() + data.currentMatch.match_number;
+  matchView.nextNum = data.currentMatch.matchNumber;
   matchView.record = data.wins + "-" + data.losses + "-" + data.ties;
+  matchView.bumperColor = data.currentMatch.bumperColor.toLocaleLowerCase();
+  matchView.allies = data.currentMatch.allies.filter( ignoreOurTeam );
+  matchView.oppo = data.currentMatch.opponents;
 
-
-  var date = new Date( data.currentMatch.time * 1000 );
-  var predictedDate = new Date( ( data.currentMatch.time + 500 ) * 1000 );
+  var date = new Date( data.currentMatch.scheduledTime * 1000 );
+  var predictedDate = new Date( ( data.currentMatch.predictedTime ) * 1000 );
   matchView.scheduledTime = date.toLocaleTimeString( [], {
     hour: '2-digit',
     minute: '2-digit'
   } );
-  matchView.predictedTime = predictedDate.toLocaleTimeString();
-
-  var redTeam = data.currentMatch.redTeams;
-  var blueTeam = data.currentMatch.blueTeams;
-  var redPos = redTeam.indexOf( 'frc401' );
-  var bluePos = blueTeam.indexOf( 'frc401' );
-  var ally1, ally2, ally3, oppo1, oppo2, oppo3 = '';
-
-  if ( redPos != -1 ) {
-    ally1 = redTeam[ 0 ].split( 'c' )[ 1 ];
-    ally2 = redTeam[ 1 ].split( 'c' )[ 1 ];
-    ally3 = redTeam[ 2 ].split( 'c' )[ 1 ];
-    oppo1 = blueTeam[ 0 ].split( 'c' )[ 1 ];
-    oppo2 = blueTeam[ 1 ].split( 'c' )[ 1 ];
-    oppo3 = blueTeam[ 2 ].split( 'c' )[ 1 ];
-    matchView.bumperColor = 'red';
-  } else if ( bluePos != -1 ) {
-    ally1 = blueTeam[ 0 ].split( 'c' )[ 1 ];
-    ally2 = blueTeam[ 1 ].split( 'c' )[ 1 ];
-    ally3 = blueTeam[ 2 ].split( 'c' )[ 1 ];
-    oppo1 = redTeam[ 0 ].split( 'c' )[ 1 ];
-    oppo2 = redTeam[ 1 ].split( 'c' )[ 1 ];
-    oppo3 = redTeam[ 2 ].split( 'c' )[ 1 ];
-    matchView.bumperColor = 'blue';
-  }
-
-  var allyString = ally1 + ' ' + ally2 + ' ' + ally3;
-  var oppoString = oppo1 + ' ' + oppo2 + ' ' + oppo3;
-
-  matchView.allies = allyString;
-  matchView.oppo = oppoString;
+  matchView.predictedTime = predictedDate.toLocaleTimeString( [], {
+    hour: '2-digit',
+    minute: '2-digit'
+  } );
 }
 
 function handleMatchChecklist( data, matchChecklist ) {
@@ -108,4 +83,8 @@ function handleMatchChecklist( data, matchChecklist ) {
 
 function handleSafetyChecklist( data, safetyChecklist ) {
   safetyChecklist.set( 'items', data.boxes );
+}
+
+function ignoreOurTeam( value ) {
+  return value != 401;
 }

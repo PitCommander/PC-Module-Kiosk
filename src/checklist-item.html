@@ -24,7 +24,7 @@
     <div class="card card-layout">
       <div class="circle">{{num}}</div>
       <h1 class="flex-child">{{text}}</h1>
-      <paper-checkbox id="box" class="huge" checked='{{status}}' on-tap="toggle"></paper-checkbox>
+      <paper-checkbox id="box" class="huge" checked='{{value}}' on-tap="toggle"></paper-checkbox>
     </div>
   </template>
   <script>
@@ -34,10 +34,14 @@
       num: Number,
       text: String,
       type: String,
-      status: Boolean,
+      value: {
+        type: Boolean,
+        value: false,
+        notify: true
+      }
     },
     toggle: function() {
-      sendChecklistItem(this.type, this.text, this.status);
+      sendChecklistItem(this.type, this.text, this.value);
     },
   });
   </script>

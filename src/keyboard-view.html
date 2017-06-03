@@ -108,8 +108,8 @@
       </div>
       <div class="card">
         <paper-button-group selected="{{selected}}">
-          <paper-button raised toggles name='single'>Single time add item</paper-button>
-          <paper-button raised toggles name='persist'>Permanantly add item</paper-button>
+          <paper-button raised toggles name='single'>Single time item</paper-button>
+          <paper-button raised toggles name='persist'>Permanant item</paper-button>
         </paper-button-group>
       </div>
       <div class="card keys">
@@ -242,8 +242,6 @@
     },
 
     pageReturn: function() {
-      this.itemText = '';
-      this.selected = 'single';
       document.querySelector('kiosk-app').page = this.caller;
     },
 

@@ -22,8 +22,8 @@
       height: 80px;
     }
     </style>
-    <template is="dom-repeat" items="{{items}}">
-      <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.text}}" status="{{item.status}}"></checklist-item>
+    <template is="dom-repeat" items="[[items]]">
+      <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.name}}" value="{{item.value}}"></checklist-item>
     </template>
     <paper-icon-button icon="add" class="fab-button" on-tap="addItem"></paper-icon-button>
   </template>
@@ -33,10 +33,8 @@
     properties: {
       items: {
         type: Array,
-        value: [{
-          'text': 'Test checklist item',
-          'status': true
-        }]
+        notify: true,
+        value: []
       },
       name: {
         type: String,

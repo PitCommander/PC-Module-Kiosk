@@ -8,95 +8,96 @@
 <dom-module id="tv-control">
   <template>
     <style include="shared-styles">
-      paper-button[toggles][active] {
-        background: var(--app-primary-color);
-        color: white;
-      }
+    paper-button[toggles][active] {
+      background: var(--app-primary-color);
+      color: white;
+    }
 
-      paper-button-group {
-        @apply(--layout-vertical);
-      }
+    paper-button-group {
+      @apply(--layout-vertical);
+    }
 
-      .tvHeader {
-        @apply(--layout-flex);
-        @apply(--layout-horizontal);
-      }
+    .tvHeader {
+      @apply(--layout-flex);
+      @apply(--layout-horizontal);
+    }
 
-      .cecControls {
-        @apply(--layout-horizontal);
-        @apply(--layout-flex);
-        @apply(--layout-center);
-        @apply(--layout-end-justified);
-        align-content: right;
-        align-items: right;
-        text-align: right;
-      }
+    .cecControls {
+      @apply(--layout-horizontal);
+      @apply(--layout-flex);
+      @apply(--layout-center);
+      @apply(--layout-end-justified);
+      align-content: right;
+      align-items: right;
+      text-align: right;
+    }
 
-      paper-icon-button {
-        @apply(--layout-center);
-        border-radius: 40px;
-        width: 80px;
-        height: 80px;
-        --paper-icon-button-ink-color: var(--app-primary-color);
-      }
+    paper-icon-button {
+      @apply(--layout-center);
+      border-radius: 40px;
+      width: 80px;
+      height: 80px;
+      --paper-icon-button-ink-color: var(--app-primary-color);
+    }
 
-      .default {
-        background: WhiteSmoke;
-      }
+    .default {
+      background: WhiteSmoke;
+    }
 
-      .on {
-        background: var(--app-primary-color);
-        color: white;
-      }
+    .on {
+      background: var(--app-primary-color);
+      color: white;
+    }
 
-      paper-slider {
-        @apply(--layout-horizontal);
-        @apply(--layout-end-justified);
-        --paper-slider-knob-color: var(--app-primary-color);
-        --paper-slider-active-color: var(--app-primary-color);
-        --paper-slider-pin-color: var(--app-primary-color);
-        --paper-slider-height: 6px;
-        background: WhiteSmoke;
-        padding: 15px 0px 15px 0px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
+    paper-slider {
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+      --paper-slider-knob-color: var(--app-primary-color);
+      --paper-slider-active-color: var(--app-primary-color);
+      --paper-slider-pin-color: var(--app-primary-color);
+      --paper-slider-height: 10px;
+      background: WhiteSmoke;
+      padding: 15px 0px 15px 0px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      min-width: 500px;
+    }
 
-      iron-icon {
-        background: WhiteSmoke;
-        padding: 8px 0px 8px 0px;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-      }
+    iron-icon {
+      background: WhiteSmoke;
+      padding: 10px 0px 10px 0px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
 
-      @media only screen and (max-width: 1823px) {
-        paper-button {
-          margin-bottom: 10px;
-          font-size: 30px;
-        }
-        h1 {
-          text-align: center;
-          font-size: 40px;
-        }
+    @media only screen and (max-width: 1823px) {
+      paper-button {
+        margin-bottom: 10px;
+        font-size: 30px;
       }
+      h1 {
+        text-align: center;
+        font-size: 40px;
+      }
+    }
 
-      @media only screen and (min-width: 1824px) {
-        paper-button {
-          margin-bottom: 10px;
-          font-size: 50px;
-        }
-        h1 {
-          text-align: center;
-          font-size: 50px;
-        }
+    @media only screen and (min-width: 1824px) {
+      paper-button {
+        margin-bottom: 10px;
+        font-size: 50px;
       }
+      h1 {
+        text-align: center;
+        font-size: 50px;
+      }
+    }
     </style>
     <div class="card">
       <div class="tvHeader">
         <h1>{{name}} TV</h1>
         <div class="cecControls">
           <iron-icon class="big" icon="{{icon}}"></iron-icon>
-          <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]" step="1" expand></paper-slider>
+          <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]" step="1"></paper-slider>
           <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off" on-tap="iconTap"></paper-icon-button>
           <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new" on-tap="iconTap"></paper-icon-button>
         </div>
@@ -111,83 +112,83 @@
     </div>
   </template>
   <script>
-    Polymer({
-      is: 'tv-control',
-      properties: {
-        name: String,
-        selected: {
-          type: String
-        },
-        mute: {
-          type: Boolean,
-          value: false,
-          observer: 'muteHandler'
-        },
-        power: {
-          type: Boolean,
-          value: false
-        },
-        volume: {
-          type: Number,
-          value: 50,
-          observer: "iconHandler"
-        },
-        muteVolume: {
-          type: Number,
-          value: 50
-        },
-        icon: {
-          type: String,
-          value: "av:volume-down"
-        }
+  Polymer({
+    is: 'tv-control',
+    properties: {
+      name: String,
+      selected: {
+        type: String
       },
-      observers: [
-        "sendPacket(name, selected, volume, power)"
-      ],
-
-      iconHandler: function () {
-        if (this.volume === 0) {
-          this.icon = "av:volume-off";
-        } else if (this.volume > 0 && this.volume < 34) {
-          this.mute = (this.volume === 0);
-          this.icon = "av:volume-mute";
-        } else if (this.volume >= 34 && this.volume < 67) {
-          this.mute = (this.volume === 0);
-          this.icon = "av:volume-down";
-        } else if (this.volume >= 67 && this.volume <= 100) {
-          this.icon = "av:volume-up";
-          this.mute = (this.volume === 0);
-        }
+      mute: {
+        type: Boolean,
+        value: false,
+        observer: 'muteHandler'
       },
-      muteHandler: function () {
-        if (this.mute) {
-          this.muteVolume = this.volume;
-          this.volume = 0;
-        } else {
-          this.volume = this.muteVolume;
-        }
-
+      power: {
+        type: Boolean,
+        value: false
       },
+      volume: {
+        type: Number,
+        value: 50,
+        observer: "iconHandler"
+      },
+      muteVolume: {
+        type: Number,
+        value: 50
+      },
+      icon: {
+        type: String,
+        value: "av:volume-down"
+      }
+    },
+    observers: [
+      "sendPacket(name, selected, volume, power)"
+    ],
 
-      iconTap: function (e) {
-        var icon = e.target.parentElement.id;
-        switch (icon) {
+    iconHandler: function() {
+      if (this.volume === 0) {
+        this.icon = "av:volume-off";
+      } else if (this.volume > 0 && this.volume < 34) {
+        this.mute = (this.volume === 0);
+        this.icon = "av:volume-mute";
+      } else if (this.volume >= 34 && this.volume < 67) {
+        this.mute = (this.volume === 0);
+        this.icon = "av:volume-down";
+      } else if (this.volume >= 67 && this.volume <= 100) {
+        this.icon = "av:volume-up";
+        this.mute = (this.volume === 0);
+      }
+    },
+    muteHandler: function() {
+      if (this.mute) {
+        this.muteVolume = this.volume;
+        this.volume = 0;
+      } else {
+        this.volume = this.muteVolume;
+      }
+
+    },
+
+    iconTap: function(e) {
+      var icon = e.target.parentElement.id;
+      switch (icon) {
         case 'mute':
           this.mute = !this.mute;
           break;
         case 'power':
           this.power = !this.power;
           break;
-        }
-      },
-
-      sendPacket: function (name, selected, volume, power) {
-        sendTvPacket(name, selected, volume / 100, power);
-      },
-
-      computeClass: function (f) {
-        return f ? "on" : "default";
       }
-    });
+    },
+
+    sendPacket: function(name, selected, volume, power) {
+      sendTvPacket(name, selected, volume / 100, power);
+    },
+
+    computeClass: function(f) {
+      return f ? "on" : "default";
+    }
+  });
   </script>
 </dom-module>
