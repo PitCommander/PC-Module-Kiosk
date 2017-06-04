@@ -9,7 +9,7 @@ webFrame.setZoomLevelLimits( 1, 1 );
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'sub' );
 
-sock.connect( 'tcp://10.0.0.7:5800' );
+sock.connect( 'tcp://10.0.0.5:5800' );
 sock.subscribe( '' );
 
 //Message handler. Switch statement calls cases based on message type.

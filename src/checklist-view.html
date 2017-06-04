@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="checklist-item.html">
 <dom-module id="checklist-view">
@@ -25,7 +24,6 @@
     <template is="dom-repeat" items="[[items]]">
       <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.name}}" value="{{item.value}}"></checklist-item>
     </template>
-    <paper-icon-button icon="add" class="fab-button" on-tap="addItem"></paper-icon-button>
   </template>
   <script>
   Polymer({
@@ -47,10 +45,6 @@
     },
     ready: function() {
       sendChecklistRequest(this.name);
-    },
-
-    addItem: function() {
-      callKeyboard(this.name);
     }
   });
   </script>

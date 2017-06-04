@@ -1,7 +1,7 @@
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'req' );
 
-sock.connect( 'tcp://10.0.0.7:5801' );
+sock.connect( 'tcp://10.0.0.5:5801' );
 
 function sendPacket( packet ) {
   var stringPacket = JSON.stringify( packet );

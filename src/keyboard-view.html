@@ -231,7 +231,7 @@
       var checklists = document.querySelectorAll('checklist-view');
       var checklist = checklists[0];
 
-      if (this.caller == 'Safety') {
+      if (this.caller === 'Safety') {
         checklist = checklists[1];
       }
       checklist.push('items', newItem);
