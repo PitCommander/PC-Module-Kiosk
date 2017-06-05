@@ -10,18 +10,16 @@ function sendPacket( packet ) {
 }
 
 
-function addChecklistItem( type, name, persist ) {
-  var packetID = '';
-  if ( type == 'Safety' ) {
-    packetID = 'CHECKLIST_ADD_SAFETY';
-  } else if ( type == 'Match' ) {
-    packetID = 'CHECKLIST_ADD_MATCH';
-  }
-
+function addChecklistItem( caller, text, persist ) {
+  var packetBase = "CHECKLIST_ADD_";
+  var packetPerm = ( persist ) ? "PERSISTENT_" : "";
+  var packetType = ( caller === 'Safety' ) ? "SAFETY" : "MATCH";
+  var packetID = packetBase + packetPerm + packetType;
+  console.log( packetID );
   var message = {
     id: packetID,
     payload: {
-      name: name,
+      name: text,
       value: false,
       persist: persist
     }
@@ -95,18 +93,26 @@ sock.on( 'message', function( message ) {
       //console.log( data.message );
       break;
     case 'GENERAL_SUCCESS':
-      goodToast.text = data.message;
-      goodToast.open();
+      try {
+        goodToast.text = data.message;
+        goodToast.open();
+      } catch ( err ) {}
       break;
     case 'GENERAL_FAIL':
-      badToast.text = data.message;
-      badToast.open();
+      try {
+        badToast.text = data.message;
+        badToast.open();
+      } catch ( err ) {}
       break;
     case 'CHECKLIST_DATA_MATCH':
-      matchChecklist.set( 'items', data.boxes );
+      try {
+        matchChecklist.set( 'items', data.boxes );
+      } catch ( err ) {}
       break;
     case 'CHECKLIST_DATA_SAFETY':
-      safetyChecklist.set( 'items', data.boxes );
+      try {
+        safetyChecklist.set( 'items', data.boxes );
+      } catch ( err ) {}
       break;
 
   }

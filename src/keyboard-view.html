@@ -224,7 +224,7 @@
 
     submitItem: function() {
       var newItem = {
-        'text': this.itemText,
+        'name': this.itemText,
         'status': false
       };
 
@@ -234,7 +234,7 @@
       if (this.caller === 'Safety') {
         checklist = checklists[1];
       }
-      checklist.push('items', newItem);
+      //checklist.push('items', newItem);
 
       addChecklistItem(this.caller, this.itemText, this.persist);
 

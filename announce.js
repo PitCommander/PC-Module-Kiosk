@@ -23,19 +23,27 @@ sock.on( 'message', function( message ) {
 
   switch ( message.id ) {
     case 'TimeTick':
-      handleTimeTick( data, matchView )
+      try {
+        handleTimeTick( data, matchView )
+      } catch ( err ) {}
       break;
     case 'MatchContainerUpdate':
       data = data.container;
-      handleMatchContainer( data, matchView );
+      try {
+        handleMatchContainer( data, matchView );
+      } catch ( err ) {}
       break;
     case 'MatchChecklistContainerUpdate':
       data = data.container;
-      handleMatchChecklist( data, matchChecklist );
+      try {
+        handleMatchChecklist( data, matchChecklist );
+      } catch ( err ) {}
       break;
     case 'SafetyChecklistContainerUpdate':
       data = data.container;
-      handleMatchChecklist( data, safetyChecklist );
+      try {
+        handleMatchChecklist( data, safetyChecklist );
+      } catch ( err ) {}
       break;
   }
 } );
