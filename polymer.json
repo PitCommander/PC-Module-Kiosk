@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/command-app.html",
+  "shell": "src/kiosk-app.html",
   "fragments": [
     "src/checklist-view.html",
     "src/match-view.html",
