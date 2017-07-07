@@ -28,7 +28,9 @@
     "paper-toast": "PolymerElements/paper-toast#^2.0.0",
     "paper-slider": "PolymerElements/paper-slider#^2.0.0",
     "paper-fab-transitions": "^0.1.0",
-    "paper-fab-speed-dial": "Collaborne/paper-fab-speed-dial#^1.0.17"
+    "paper-fab-speed-dial": "Collaborne/paper-fab-speed-dial#^1.0.17",
+    "highcharts-chart": "avdaredevil/highcharts-chart#^2.0.1",
+    "highcharts": "^5.0.12"
   },
   "private": true,
   "resolutions": {
