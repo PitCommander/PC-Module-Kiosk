@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="battery-item.html">
+<dom-module id="battery-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .batteryHolder {
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+        @apply(--layout-center-justified);
+      }
+    </style>
+    <div class="batteryHolder">
+      <battery-item name="1" charge="65"></battery-item>
+      <battery-item name="2" charge="65"></battery-item>
+      <battery-item name="3" charge="65"></battery-item>
+      <battery-item name="4" charge="65"></battery-item>
+      <battery-item name="5" charge="65"></battery-item>
+      <battery-item name="6" charge="65"></battery-item>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'battery-view',
+      properties: {},
+    });
+  </script>
+</dom-module>
