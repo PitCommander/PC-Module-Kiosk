@@ -7,7 +7,8 @@ webFrame.setZoomLevelLimits(1, 1);
 
 window.$ = window.jQuery = require('jquery');
 var Highcharts = require('highcharts');
-Highcharts.setOptions(hcOptions);
+require('highcharts/highcharts-more')(Highcharts);
+require('highcharts/modules/solid-gauge')(Highcharts);
 
 //ZMQ subscriber setup, change IP to correct server IP as needed
 var zmq = require('zeromq'),
@@ -100,8 +101,6 @@ function handleSafetyChecklist(data, safetyChecklist) {
 function ignoreOurTeam(value) {
   return value != 401;
 }
-
-function createCharts() {}
 
 var hcOptions = {
   chart: {

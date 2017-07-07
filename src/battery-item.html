@@ -1,14 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/highcharts-chart/highcharts-chart.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="../bower_components/highcharts-chart/highcharts-chart.html">
 <dom-module id="battery-item">
   <template>
     <style include="shared-styles">
 
     </style>
     <div class="card card-layout">
-      <highcharts-chart title="Charger {{name}}" type="column" yAxis="{{yAxis}}" plotOptions="{{plotOptions}}" data="[80]" tooltipOptions="{{tooltip}}"></highcharts-chart>
+      <highcharts-chart title="Charger {{name}}" type="solidgauge" yAxis="{{yAxis}}" plotOptions="{{plotOptions}}" data="[80]" tooltipOptions="{{tooltip}}"></highcharts-chart>
     </div>
   </template>
   <script>
@@ -16,85 +16,8 @@
       is: 'battery-item',
       properties: {
         name: String,
-        charge: Number,
-        plotOptions: {
-          type: Object,
-          value: {
-            solidgauge: {
-              dataLabels: {
-                y: 5,
-                borderWidth: 0,
-                useHTML: true
-              }
-            }
-          }
-        },
-        yAxis: {
-          type: Object,
-          value: {
-            min: 0,
-            max: 100,
-            stops: [
-[0.4, '#DF5353'], // green
-[0.6, '#DDDF0D'], // yellow
-[0.9, '#55BF3B'] // red
-],
-            lineWidth: 0,
-            minorTickInterval: null,
-            tickAmount: 2,
-            title: {
-              y: -70
-            },
-            labels: {
-              y: 16
-            }
-          }
-        },
-
-        chartOptions: {
-          type: Object,
-          value: {
-            chart: {
-              type: 'solidgauge'
-            },
-
-            title: null,
-
-            pane: {
-              center: ['50%', '85%'],
-              size: '140%',
-              startAngle: -90,
-              endAngle: 90,
-              background: {
-                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-                innerRadius: '60%',
-                outerRadius: '100%',
-                shape: 'arc'
-              }
-            },
-
-            series: [{
-              name: 'Charge',
-              data: [80],
-              dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                  ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-                  '<span style="font-size:12px;color:silver">%</span></div>'
-              }
-}]
-
-          }
-        },
-
-        tooltip: {
-          type: Object,
-          value: {
-            enabled: false
-          }
-        },
+        charge: Number
       },
-
-
     });
   </script>
 </dom-module>
