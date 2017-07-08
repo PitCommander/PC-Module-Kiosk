@@ -104,16 +104,15 @@ function ignoreOurTeam(value) {
 
 var hcOptions = {
   chart: {
-    type: 'solidgauge'
+    type: 'solidgauge',
+    width: 480,
   },
-
-  title: null,
 
   pane: {
     center: ['50%', '85%'],
     size: '140%',
-    startAngle: -90,
-    endAngle: 90,
+    startAngle: -80,
+    endAngle: 80,
     background: {
       backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
       innerRadius: '60%',
@@ -122,11 +121,6 @@ var hcOptions = {
     }
   },
 
-  tooltip: {
-    enabled: false
-  },
-
-  // the value axis
   yAxis: {
     min: 0,
     max: 100,
@@ -139,8 +133,10 @@ var hcOptions = {
             [0.9, '#55BF3B'] // red
         ],
     lineWidth: 0,
-    minorTickInterval: null,
-    tickAmount: 2,
+    minorTickInterval: 5,
+    tickAmount: 11,
+    tickLength: 30,
+    zIndex: 10,
     title: {
       y: -70
     },
@@ -150,11 +146,16 @@ var hcOptions = {
   },
 
   plotOptions: {
+    series: {
+      enableMouseTracking: false
+    },
+
     solidgauge: {
       dataLabels: {
         y: 5,
         borderWidth: 0,
-        useHTML: true
+        useHTML: true,
+        zIndex: 100
       }
     }
   },
@@ -164,14 +165,10 @@ var hcOptions = {
 
   series: [{
     name: 'Charge',
-    data: [80],
     dataLabels: {
-      format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+      format: '<div style="text-align:center"><span style="font-size:35px;color:' +
         ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
         '<span style="font-size:12px;color:silver">%</span></div>'
-    },
-    tooltip: {
-      valueSuffix: ' %'
     }
     }]
 };
