@@ -1,48 +1,47 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/highcharts-chart/highcharts-chart.html">
 <link rel="import" href="shared-styles.html">
-
 <dom-module id="battery-item">
   <template>
     <style include="shared-styles">
-      .card {
-        max-width: 500px;
-        max-height: 400px;
-        margin: 12px;
-        padding: 8px;
-      }
+    .card {
+      max-width: 500px;
+      max-height: 400px;
+      margin: 12px;
+      padding: 8px;
+    }
     </style>
     <div class="card card-layout">
       <highcharts-chart id="chart" loading="{{unplugged}}" loading-message="Charger {{name}} Unplugged" title="Charger {{name}}" type="solidgauge"></highcharts-chart>
     </div>
   </template>
   <script>
-    Polymer({
-      is: 'battery-item',
-      properties: {
-        name: String,
-        unplugged: {
-          type: Boolean,
-          observer: "plugHandler"
-        },
-        charge: {
-          type: Number,
-          value: 0,
-          observer: "chargeController"
-        }
+  Polymer({
+    is: 'battery-item',
+    properties: {
+      name: String,
+      unplugged: {
+        type: Boolean,
+        observer: "plugHandler"
       },
-
-      plugHandler: function () {
-        this.charge = 0;
-      },
-
-      chargeController: function () {
-        this.$.chart.setData([Number(this.charge)]);
-      },
-
-      ready: function () {
-        this.$.chart.highchartOptions = hcOptions;
+      charge: {
+        type: Number,
+        value: 0,
+        observer: "chargeController"
       }
-    });
+    },
+
+    plugHandler: function() {
+      this.$.chart.setData([]);
+    },
+
+    chargeController: function() {
+      this.$.chart.setData([Number(this.charge)]);
+    },
+
+    ready: function() {
+      this.$.chart.highchartOptions = hcOptions;
+    }
+  });
   </script>
 </dom-module>
