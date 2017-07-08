@@ -5,10 +5,15 @@
 <dom-module id="battery-item">
   <template>
     <style include="shared-styles">
-
+      .card {
+        max-width: 500px;
+        max-height: 400px;
+        margin: 12px;
+        padding: 8px;
+      }
     </style>
     <div class="card card-layout">
-      <highcharts-chart title="Charger {{name}}" type="solidgauge" yAxis="{{yAxis}}" plotOptions="{{plotOptions}}" data="[80]" tooltipOptions="{{tooltip}}"></highcharts-chart>
+      <highcharts-chart id="chart" loading="{{unplugged}}" loading-message="Charger {{name}} Unplugged" title="Charger {{name}}" type="solidgauge"></highcharts-chart>
     </div>
   </template>
   <script>
@@ -16,8 +21,28 @@
       is: 'battery-item',
       properties: {
         name: String,
-        charge: Number
+        unplugged: {
+          type: Boolean,
+          observer: "plugHandler"
+        },
+        charge: {
+          type: Number,
+          value: 0,
+          observer: "chargeController"
+        }
       },
+
+      plugHandler: function () {
+        this.charge = 0;
+      },
+
+      chargeController: function () {
+        this.$.chart.setData([Number(this.charge)]);
+      },
+
+      ready: function () {
+        this.$.chart.highchartOptions = hcOptions;
+      }
     });
   </script>
 </dom-module>
