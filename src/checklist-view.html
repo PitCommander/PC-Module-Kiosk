@@ -9,20 +9,22 @@
       padding: 10px;
     }
 
-    .fab-button {
-      position: fixed;
-      bottom: 10px;
-      right: 50%;
-      right: calc(50% - 40px);
+    .doneButton {
       background: var(--app-primary-color);
       color: white;
-      border-radius: 40px;
-      width: 80px;
-      height: 80px;
+      font-size: 30px;
+      @apply(--layout-flex);
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justifed);
     }
     </style>
     <template is="dom-repeat" items="[[items]]">
-      <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.name}}" value="{{item.value}}"></checklist-item>
+      <checklist-item num="{{displayIndex(index)}}" type="{{name}}" text="{{item.name}}" value="{{item.value}}" status="{{status}}"></checklist-item>
+    </template>
+    <template is="dom-if" if="[[isRemove(status)]]">
+      <div class="card">
+        <paper-button class="doneButton" on-tap="finishRemove" raised name="Done">Done Removing Items</paper-button>
+      </div>
     </template>
   </template>
   <script>
@@ -38,8 +40,21 @@
         type: String,
         value: 'checklist',
         reflectToAttribute: true,
+      },
+      status: {
+        type: String,
+        value: "CHECK"
       }
     },
+
+    isRemove: function(status) {
+      return status === "REMOVE"
+    },
+
+    finishRemove: function() {
+      this.status = "CHECK";
+    },
+
     displayIndex: function(index) {
       return index + 1;
     },

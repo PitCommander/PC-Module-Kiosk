@@ -1,7 +1,7 @@
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'req' );
 
-sock.connect( 'tcp://10.0.0.5:5801' );
+sock.connect( 'tcp://192.168.15.227:5801' );
 
 function sendPacket( packet ) {
   var stringPacket = JSON.stringify( packet );
@@ -15,13 +15,26 @@ function addChecklistItem( caller, text, persist ) {
   var packetPerm = ( persist ) ? "PERSISTENT_" : "";
   var packetType = ( caller === 'Safety' ) ? "SAFETY" : "MATCH";
   var packetID = packetBase + packetPerm + packetType;
-  console.log( packetID );
   var message = {
     id: packetID,
     payload: {
       name: text,
       value: false,
       persist: persist
+    }
+  };
+
+  sendPacket( message );
+}
+
+function removeChecklistItem( caller, text ) {
+  var packetBase = "CHECKLIST_REMOVE_";
+  var packetType = ( caller === 'Safety' ) ? "SAFETY" : "MATCH";
+  var packetID = packetBase + packetType;
+  var message = {
+    id: packetID,
+    payload: {
+      name: text
     }
   };
 

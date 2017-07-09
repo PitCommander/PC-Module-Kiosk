@@ -14,7 +14,7 @@ require( 'highcharts/modules/solid-gauge' )( Highcharts );
 var zmq = require( 'zeromq' ),
   sock = zmq.socket( 'sub' );
 
-sock.connect( 'tcp://10.0.0.5:5800' );
+sock.connect( 'tcp://192.168.15.227:5800' );
 sock.subscribe( '' );
 
 //Message handler. Switch statement calls cases based on message type.
