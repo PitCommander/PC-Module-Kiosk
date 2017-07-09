@@ -4,30 +4,57 @@
 <dom-module id="battery-view">
   <template>
     <style include="shared-styles">
-      :host {
-        display: block;
-        padding: 10px;
-      }
+     :host {
+      display: block;
+      padding: 10px;
+    }
 
-      .batteryHolder {
-        @apply(--layout-horizontal);
-        @apply(--layout-wrap);
-        @apply(--layout-center-justified);
-      }
+    .batteryHolder {
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      @apply(--layout-center-justified);
+    }
     </style>
     <div class="batteryHolder">
-      <battery-item name="1" charge="100"></battery-item>
-      <battery-item name="6" charge="34"></battery-item>
-      <battery-item name="2" charge="57"></battery-item>
-      <battery-item name="5" charge="82"></battery-item>
-      <battery-item name="3" charge="12"></battery-item>
-      <battery-item name="4" charge="68"></battery-item>
+      <template is="dom-repeat" items="[[items]]">
+        <battery-item number="{{item.number}}" status="{{item.status}}"></battery-item>
+      </template>
     </div>
   </template>
   <script>
-    Polymer({
-      is: 'battery-view',
-      properties: {},
-    });
+  Polymer({
+    is: 'battery-view',
+    properties: {
+      items: {
+        type: Array,
+        notify: true,
+        value: [{
+            "number": "1",
+            "status": "UNPLUGGED"
+          },
+          {
+            "number": "2",
+            "status": "27"
+          },
+          {
+            "number": "3",
+            "status": "53"
+          },
+          {
+            "number": "4",
+            "status": "94"
+          },
+          {
+            "number": "5",
+            "status": "51"
+          },
+          {
+            "number": "6",
+            "status": "16"
+          }
+        ]
+      }
+    },
+  });
   </script>
 </dom-module>

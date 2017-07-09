@@ -12,31 +12,29 @@
     }
     </style>
     <div class="card card-layout">
-      <highcharts-chart id="chart" loading="{{unplugged}}" loading-message="Charger {{name}} Unplugged" title="Charger {{name}}" type="solidgauge"></highcharts-chart>
+      <highcharts-chart id="chart" loading="{{unplugged}}" loading-message="Charger {{number}} Unplugged" title="Charger {{number}}" type="solidgauge"></highcharts-chart>
     </div>
   </template>
   <script>
   Polymer({
     is: 'battery-item',
     properties: {
-      name: String,
-      unplugged: {
-        type: Boolean,
-        observer: "plugHandler"
+      number: String,
+      status: {
+        type: String,
+        observer: "statusHandler"
       },
-      charge: {
-        type: Number,
-        value: 0,
-        observer: "chargeController"
+      unplugged: Boolean
+    },
+
+    statusHandler: function() {
+      if (this.status === "UNPLUGGED") {
+        this.$.chart.setData([]);
+        this.unplugged = true;
+      } else {
+        this.unplugged = false;
+        this.$.chart.setData([Number(this.status)]);
       }
-    },
-
-    plugHandler: function() {
-      this.$.chart.setData([]);
-    },
-
-    chargeController: function() {
-      this.$.chart.setData([Number(this.charge)]);
     },
 
     ready: function() {
