@@ -24,6 +24,7 @@
 <link rel="import" href="screen-view.html">
 <link rel="import" href="keyboard-view.html">
 <link rel="import" href="battery-view.html">
+<link rel="import" href="scouting-view.html">
 <dom-module id="kiosk-app">
   <template>
     <style>
@@ -123,7 +124,7 @@
               </paper-tab>
               <paper-tab link name="battery">Battery
               </paper-tab>
-              <paper-tab link name="safety">Scouting
+              <paper-tab link name="scouting">Scouting
               </paper-tab>
             </paper-tabs>
           </app-toolbar>
@@ -135,6 +136,7 @@
           <checklist-view id="Safety" name="Safety"></checklist-view>
           <keyboard-view name="keyboard"></keyboard-view>
           <battery-view name="battery"></battery-view>
+          <scouting-view name="scouting"></scouting-view>
         </neon-animated-pages>
         <paper-toast id="goodToast" text="Fresh memes!" class="goodToast"></paper-toast>
         <paper-toast id="badToast" text="Stale memes..." class="badToast"></paper-toast>
