@@ -2,60 +2,61 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="PC-Module-Kiosk">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>PC-Kiosk</title>
-  <meta name="description" content="Pit Commander Kiosk">
-  <link rel="icon" href="/images/favicon.ico">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#d35401">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="PC-KIOSK">
-  <script src="announce.js"></script>
-  <script src="command.js"></script>
-  <script>
-    window.Polymer = {
-      dom: 'shady',
-      lazyRegister: false,
-    };
+    <meta charset="utf-8">
+    <meta name="generator" content="PC-Module-Kiosk">
+    <meta name="viewport"
+          content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>PC-Kiosk</title>
+    <meta name="description" content="Pit Commander Kiosk">
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#d35401">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="PC-KIOSK">
+    <script src="announce.js"></script>
+    <script>
+        window.Polymer = {
+            dom: 'shady',
+            lazyRegister: false,
+        };
 
-    (function () {
-      'use strict';
+        (function () {
+            'use strict';
 
-      var onload = function () {
-        if (!window.HTMLImports) {
-          document.dispatchEvent(
-            new CustomEvent('WebComponentsReady', {
-              bubbles: true
-            })
-          );
+            var onload = function () {
+                if (!window.HTMLImports) {
+                    document.dispatchEvent(
+                        new CustomEvent('WebComponentsReady', {
+                            bubbles: true
+                        })
+                    );
+                }
+            };
+
+            onload();
+        })();
+    </script>
+    <link rel="import" href="src/kiosk-app.html">
+    <style>
+        body {
+            @apply(--layout-fullbleed);
+            margin: 0;
+            font-family: 'Roboto', 'Noto', sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: #eeeeee;
         }
-      };
 
-      onload();
-    })();
-  </script>
-  <link rel="import" href="src/kiosk-app.html">
-  <style>
-    body {
-      @apply(--layout-fullbleed);
-      margin: 0;
-      font-family: 'Roboto', 'Noto', sans-serif;
-      line-height: 1.5;
-      min-height: 100vh;
-      background-color: #eeeeee;
-    }
-
-    ::-webkit-scrollbar {
-      width: 0px;
-      display: hidden;
-    }
-  </style>
+        ::-webkit-scrollbar {
+            width: 0;
+            display: none;
+            background: transparent;
+        }
+    </style>
 </head>
 
 <body>
-  <kiosk-app></kiosk-app>
+<kiosk-app></kiosk-app>
 </body>
 
 </html>

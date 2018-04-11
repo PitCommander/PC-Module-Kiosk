@@ -26,168 +26,179 @@
 <link rel="import" href="battery-view.html">
 <link rel="import" href="scouting-view.html">
 <dom-module id="kiosk-app">
-  <template>
-    <style>
-      :host {
-        --app-primary-color: #d35401;
-        --app-secondary-color: #333;
-        display: block;
-      }
+    <template>
+        <style>
+            :host {
+                --app-primary-color: #d35401;
+                --app-secondary-color: #333;
+                display: block;
+            }
 
-      .header-text {
-        flex: none;
-      }
+            .header-text {
+                flex: none;
+            }
 
-      paper-tab {
-        font-size: 25px;
-      }
+            paper-tab {
+                font-size: 25px;
+            }
 
-      h1 {
-        font-size: 20px;
-      }
+            h1 {
+                font-size: 20px;
+            }
 
-      app-header {
-        color: #fff;
-        background-color: var(--app-primary-color);
-      }
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+            }
 
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
 
-      paper-fab-speed-dial {
-        --paper-fab-speed-dial-background: var(--app-primary-color);
-      }
+            paper-fab-speed-dial {
+                --paper-fab-speed-dial-background: var(--app-primary-color);
+            }
 
-      paper-fab-speed-dial-action {
-        --paper-fab-speed-dial-action-background: var(--app-primary-color);
-      }
+            paper-fab-speed-dial-action {
+                --paper-fab-speed-dial-action-background: var(--app-primary-color);
+            }
 
-      paper-tabs {
-        --paper-tabs-selection-bar-color: #ddd;
-        height: 100%;
-        @apply(--layout-flex);
-      }
+            paper-tabs {
+                --paper-tabs-selection-bar-color: #ddd;
+                height: 100%;
+                @apply(--layout-flex);
+            }
 
-      paper-tab {
-        --paper-tab-ink: #ddd;
-        text-transform: uppercase;
-        font-size: var(--big-text-size);
-        padding-left: 10px;
-        padding-right: 10px;
-      }
+            paper-tab {
+                --paper-tab-ink: #ddd;
+                text-transform: uppercase;
+                font-size: var(--big-text-size);
+                padding-left: 10px;
+                padding-right: 10px;
+            }
 
-      .link {
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        color: inherit;
-        text-decoration: inherit;
-      }
+            .link {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-center);
+                color: inherit;
+                text-decoration: inherit;
+            }
 
-      .big {
-        --iron-icon-height: 50px;
-        --iron-icon-width: 50px;
-      }
+            .big {
+                --iron-icon-height: 50px;
+                --iron-icon-width: 50px;
+            }
 
-      paper-toast {
-        font-size: 20px;
-      }
+            paper-toast {
+                font-size: 20px;
+            }
 
-      .goodToast {
-        --paper-toast-background-color: ForestGreen;
-        --paper-toast-color: white;
-      }
+            .goodToast {
+                --paper-toast-background-color: ForestGreen;
+                --paper-toast-color: white;
+            }
 
-      .badToast {
-        --paper-toast-background-color: Crimson;
-        --paper-toast-color: white;
-      }
-    </style>
-    <app-location route="{{route}}"></app-location>
-    <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
-    <app-drawer-layout fullbleed force-narrow>
-      <!-- Main content -->
-      <app-header-layout has-scrolling-region>
-        <app-header shadow fixed id="header">
-          <app-toolbar>
-            <div main-title class="header-text">
-              <iron-icon class="big" icon="my-icons:snake"></iron-icon>
-            </div>
-            <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation" autoselect autoselect-delay="0">
-              <paper-tab link name="Match">Checklist
-              </paper-tab>
-              <paper-tab link name="counter">Match Data
-              </paper-tab>
-              <paper-tab link name="screen">Screen Controls
-              </paper-tab>
-              <paper-tab link name="Safety">Safety
-              </paper-tab>
-              <paper-tab link name="battery">Battery
-              </paper-tab>
-              <paper-tab link name="scouting">Scouting
-              </paper-tab>
-            </paper-tabs>
-          </app-toolbar>
-        </app-header>
-        <neon-animated-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="counter" role="main" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
-          <checklist-view name="Match" id="Match"></checklist-view>
-          <match-view name="counter"></match-view>
-          <screen-view name="screen"></screen-view>
-          <checklist-view id="Safety" name="Safety"></checklist-view>
-          <keyboard-view name="keyboard"></keyboard-view>
-          <battery-view name="battery"></battery-view>
-          <scouting-view name="scouting"></scouting-view>
-        </neon-animated-pages>
-        <paper-toast id="goodToast" text="Fresh memes!" class="goodToast"></paper-toast>
-        <paper-toast id="badToast" text="Stale memes..." class="badToast"></paper-toast>
-      </app-header-layout>
-      <template is="dom-if" if="[[validPage]]">
-        <paper-fab-speed-dial>
-          <paper-fab-speed-dial-action on-tap="addItem" icon="icons:add-circle-outline">Add</paper-fab-speed-dial-action>
-          <paper-fab-speed-dial-action on-tap="removeItem" icon="icons:remove-circle-outline">Remove</paper-fab-speed-dial-action>
-        </paper-fab-speed-dial>
-      </template>
-    </app-drawer-layout>
-  </template>
-  <script>
-    Polymer({
-      is: 'kiosk-app',
-      properties: {
-        page: {
-          type: String,
-          value: "battery",
-          reflectToAttribute: true,
-          observer: "pageChecker"
-        },
-        validPage: {
-          type: Boolean,
-          value: false
-        }
-      },
+            .badToast {
+                --paper-toast-background-color: Crimson;
+                --paper-toast-color: white;
+            }
+        </style>
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern=":/" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-drawer-layout fullbleed force-narrow>
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
+                <app-header shadow fixed id="header">
+                    <app-toolbar>
+                        <div main-title class="header-text">
+                            <iron-icon class="big" icon="my-icons:snake"></iron-icon>
+                        </div>
+                        <paper-tabs selected="{{page}}" attr-for-selected="name" role="navigation" autoselect
+                                    autoselect-delay="0">
+                            <paper-tab link name="Match">Checklist
+                            </paper-tab>
+                            <paper-tab link name="counter">Match Data
+                            </paper-tab>
+                            <paper-tab link name="screen">Screen Controls
+                            </paper-tab>
+                            <paper-tab link name="Safety">Safety
+                            </paper-tab>
+                            <!--<paper-tab link name="battery">Battery
+                            </paper-tab>
+                            <paper-tab link name="scouting">Scouting
+                            </paper-tab>-->
+                        </paper-tabs>
+                    </app-toolbar>
+                </app-header>
+                <neon-animated-pages id="pages" selected="[[page]]" attr-for-selected="name"
+                                     fallback-selection="counter" role="main" entry-animation="fade-in-animation"
+                                     exit-animation="fade-out-animation">
+                    <checklist-view name="Match" id="Match"></checklist-view>
+                    <match-view name="counter"></match-view>
+                    <screen-view name="screen"></screen-view>
+                    <checklist-view id="Safety" name="Safety"></checklist-view>
+                    <keyboard-view name="keyboard"></keyboard-view>
+                    <battery-view name="battery"></battery-view>
+                    <scouting-view name="scouting"></scouting-view>
+                </neon-animated-pages>
+                <paper-toast id="goodToast" text="Fresh memes!" class="goodToast"></paper-toast>
+                <paper-toast id="badToast" text="Stale memes..." class="badToast"></paper-toast>
+            </app-header-layout>
+            <template is="dom-if" if="[[validPage]]">
+                <paper-fab-speed-dial>
+                    <paper-fab-speed-dial-action on-tap="addItem" icon="icons:add-circle-outline">Add
+                    </paper-fab-speed-dial-action>
+                    <paper-fab-speed-dial-action on-tap="removeItem" icon="icons:remove-circle-outline">Remove
+                    </paper-fab-speed-dial-action>
+                </paper-fab-speed-dial>
+            </template>
+        </app-drawer-layout>
+    </template>
+    <script>
+        Polymer({
+            is: 'kiosk-app',
+            properties: {
+                page: {
+                    type: String,
+                    value: "counter",
+                    reflectToAttribute: true,
+                    observer: "pageChecker"
+                },
+                validPage: {
+                    type: Boolean,
+                    value: false
+                }
+            },
 
-      addItem: function () {
-        var fab = document.querySelector('paper-fab-speed-dial')
-        fab.close();
+            addItem: function () {
+                let fab = document.querySelector('paper-fab-speed-dial');
+                fab.close();
 
-        this.$.pages.selectedItem.status = "CHECK";
+                this.$.pages.selectedItem.status = "CHECK";
 
-        var keyboard = document.querySelector('keyboard-view');
-        keyboard.caller = this.page;
-        keyboard.itemText = '';
-        keyboard.selected = 'single';
-        this.page = 'keyboard';
-      },
+                let keyboard = document.querySelector('keyboard-view');
+                keyboard.caller = this.page;
+                keyboard.itemText = '';
+                keyboard.selected = 'single';
+                this.page = 'keyboard';
+            },
 
-      removeItem: function () {
-        this.$.pages.selectedItem.status = "REMOVE";
-        var fab = document.querySelector('paper-fab-speed-dial')
-        fab.close();
+            removeItem: function () {
+                this.$.pages.selectedItem.status = "REMOVE";
+                let fab = document.querySelector('paper-fab-speed-dial');
+                fab.close();
 
-      },
+            },
 
-      pageChecker: function () {
-        this.validPage = (this.page === 'Match' || this.page === 'Safety');
-      }
-    });
-  </script>
+            pageChecker: function () {
+                this.validPage = (this.page === 'Match' || this.page === 'Safety');
+            },
+
+            ready: function () {
+                sendGeneralContainerRequest();
+                sendMatchContainerRequest();
+            }
+
+        });
+    </script>
 </dom-module>

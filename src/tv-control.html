@@ -6,189 +6,205 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="tv-control">
-  <template>
-    <style include="shared-styles">
-    paper-button[toggles][active] {
-      background: var(--app-primary-color);
-      color: white;
-    }
+    <template>
+        <style include="shared-styles">
+            paper-button[toggles][active] {
+                background: var(--app-primary-color);
+                color: white;
+            }
 
-    paper-button-group {
-      @apply(--layout-vertical);
-    }
+            paper-button-group {
+                @apply(--layout-vertical);
+            }
 
-    .tvHeader {
-      @apply(--layout-flex);
-      @apply(--layout-horizontal);
-    }
+            .tvHeader {
+                @apply(--layout-flex);
+                @apply(--layout-horizontal);
+            }
 
-    .cecControls {
-      @apply(--layout-horizontal);
-      @apply(--layout-flex);
-      @apply(--layout-center);
-      @apply(--layout-end-justified);
-      align-content: right;
-      align-items: right;
-      text-align: right;
-    }
+            .cecControls {
+                @apply(--layout-horizontal);
+                @apply(--layout-flex);
+                @apply(--layout-center);
+                @apply(--layout-end-justified);
+                align-content: right;
+                align-items: right;
+                text-align: right;
+            }
 
-    paper-icon-button {
-      @apply(--layout-center);
-      border-radius: 40px;
-      width: 80px;
-      height: 80px;
-      --paper-icon-button-ink-color: var(--app-primary-color);
-    }
+            paper-icon-button {
+                @apply(--layout-center);
+                border-radius: 40px;
+                width: 80px;
+                height: 80px;
+                --paper-icon-button-ink-color: var(--app-primary-color);
+            }
 
-    .default {
-      background: WhiteSmoke;
-    }
+            .default {
+                background: WhiteSmoke;
+            }
 
-    .on {
-      background: var(--app-primary-color);
-      color: white;
-    }
+            .on {
+                background: var(--app-primary-color);
+                color: white;
+            }
 
-    paper-slider {
-      @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
-      --paper-slider-knob-color: var(--app-primary-color);
-      --paper-slider-active-color: var(--app-primary-color);
-      --paper-slider-pin-color: var(--app-primary-color);
-      --paper-slider-height: 10px;
-      background: WhiteSmoke;
-      padding: 15px 0px 15px 0px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-      min-width: 500px;
-    }
+            paper-slider {
+                @apply(--layout-horizontal);
+                @apply(--layout-end-justified);
+                --paper-slider-knob-color: var(--app-primary-color);
+                --paper-slider-active-color: var(--app-primary-color);
+                --paper-slider-pin-color: var(--app-primary-color);
+                --paper-slider-height: 10px;
+                background: WhiteSmoke;
+                padding: 15px 0 15px 0;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                min-width: 500px;
+            }
 
-    iron-icon {
-      background: WhiteSmoke;
-      padding: 10px 0px 10px 0px;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-    }
+            iron-icon {
+                background: WhiteSmoke;
+                padding: 10px 0 10px 0;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
 
-    @media only screen and (max-width: 1823px) {
-      paper-button {
-        margin-bottom: 10px;
-        font-size: 30px;
-      }
-      h1 {
-        text-align: center;
-        font-size: 40px;
-      }
-    }
+            @media only screen and (max-width: 1823px) {
+                paper-button {
+                    margin-bottom: 10px;
+                    font-size: 30px;
+                }
 
-    @media only screen and (min-width: 1824px) {
-      paper-button {
-        margin-bottom: 10px;
-        font-size: 50px;
-      }
-      h1 {
-        text-align: center;
-        font-size: 50px;
-      }
-    }
-    </style>
-    <div class="card">
-      <div class="tvHeader">
-        <h1>{{name}} TV</h1>
-        <div class="cecControls">
-          <iron-icon class="big" icon="{{icon}}"></iron-icon>
-          <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]" step="1"></paper-slider>
-          <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off" on-tap="iconTap"></paper-icon-button>
-          <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new" on-tap="iconTap"></paper-icon-button>
+                h1 {
+                    text-align: center;
+                    font-size: 40px;
+                }
+            }
+
+            @media only screen and (min-width: 1824px) {
+                paper-button {
+                    margin-bottom: 10px;
+                    font-size: 50px;
+                }
+
+                h1 {
+                    text-align: center;
+                    font-size: 50px;
+                }
+            }
+        </style>
+        <div class="card">
+            <div class="tvHeader">
+                <h1>{{name}} TV</h1>
+                <div class="cecControls">
+                    <iron-icon class="big" icon="{{icon}}"></iron-icon>
+                    <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]"
+                                  step="1"></paper-slider>
+                    <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off"
+                                       on-tap="iconTap"></paper-icon-button>
+                    <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new"
+                                       on-tap="iconTap"></paper-icon-button>
+                </div>
+            </div>
+            <paper-button-group selected="{{selected}}">
+                <paper-button raised toggles name="STREAM">Video Stream</paper-button>
+                <paper-button raised toggles name="SCHEDULE">Team Schedule</paper-button>
+                <paper-button raised toggles name="TIMER">Match Timer</paper-button>
+                <paper-button raised toggles name="SPECS">Robot Specs</paper-button>
+                <paper-button raised toggles name="LOGO">Logo Screen</paper-button>
+            </paper-button-group>
         </div>
-      </div>
-      <paper-button-group selected="{{selected}}">
-        <paper-button raised toggles name="stream">Video Stream</paper-button>
-        <paper-button raised toggles name="schedule">Team Schedule</paper-button>
-        <paper-button raised toggles name="timer">Match Timer</paper-button>
-        <paper-button raised toggles name="specs">Robot Specs</paper-button>
-        <paper-button raised toggles name="logo">Logo Screen</paper-button>
-      </paper-button-group>
-    </div>
-  </template>
-  <script>
-  Polymer({
-    is: 'tv-control',
-    properties: {
-      name: String,
-      selected: {
-        type: String
-      },
-      mute: {
-        type: Boolean,
-        value: false,
-        observer: 'muteHandler'
-      },
-      power: {
-        type: Boolean,
-        value: false
-      },
-      volume: {
-        type: Number,
-        value: 50,
-        observer: "iconHandler"
-      },
-      muteVolume: {
-        type: Number,
-        value: 50
-      },
-      icon: {
-        type: String,
-        value: "av:volume-down"
-      }
-    },
-    observers: [
-      "sendPacket(name, selected, volume, power)"
-    ],
+    </template>
+    <script>
+        Polymer({
+            is: 'tv-control',
+            properties: {
+                name: {
+                    type: String,
+                    value: "Center"
+                },
+                selected: {
+                    type: String,
+                    observer: 'contentHandler'
+                },
+                mute: {
+                    type: Boolean,
+                    value: false,
+                    observer: 'muteHandler'
+                },
+                power: {
+                    type: Boolean,
+                    value: false,
+                    observer: 'powerHandler'
+                },
+                volume: {
+                    type: Number,
+                    value: 50,
+                    observer: "volumeHandler"
+                },
+                muteVolume: {
+                    type: Number,
+                    value: 50
+                },
+                icon: {
+                    type: String,
+                    value: "av:volume-down"
+                }
+            },
 
-    iconHandler: function() {
-      if (this.volume === 0) {
-        this.icon = "av:volume-off";
-      } else if (this.volume > 0 && this.volume < 34) {
-        this.mute = (this.volume === 0);
-        this.icon = "av:volume-mute";
-      } else if (this.volume >= 34 && this.volume < 67) {
-        this.mute = (this.volume === 0);
-        this.icon = "av:volume-down";
-      } else if (this.volume >= 67 && this.volume <= 100) {
-        this.icon = "av:volume-up";
-        this.mute = (this.volume === 0);
-      }
-    },
-    muteHandler: function() {
-      if (this.mute) {
-        this.muteVolume = this.volume;
-        this.volume = 0;
-      } else {
-        this.volume = this.muteVolume;
-      }
+            iconHandler: function () {
+                if (this.volume === 0) {
+                    this.icon = "av:volume-off";
+                } else if (this.volume > 0 && this.volume < 34) {
+                    this.mute = (this.volume === 0);
+                    this.icon = "av:volume-mute";
+                } else if (this.volume >= 34 && this.volume < 67) {
+                    this.mute = (this.volume === 0);
+                    this.icon = "av:volume-down";
+                } else if (this.volume >= 67 && this.volume <= 100) {
+                    this.icon = "av:volume-up";
+                    this.mute = (this.volume === 0);
+                }
+            },
+            muteHandler: function () {
+                if (this.mute) {
+                    this.muteVolume = this.volume;
+                    this.volume = 0;
+                } else {
+                    this.volume = this.muteVolume;
+                }
 
-    },
+                sendTvMute(this.name);
 
-    iconTap: function(e) {
-      var icon = e.target.parentElement.id;
-      switch (icon) {
-        case 'mute':
-          this.mute = !this.mute;
-          break;
-        case 'power':
-          this.power = !this.power;
-          break;
-      }
-    },
+            },
 
-    sendPacket: function(name, selected, volume, power) {
-      sendTvPacket(name, selected, volume / 100, power);
-    },
+            contentHandler: function() {
+                sendTvContent(this.name, this.selected);
+            },
 
-    computeClass: function(f) {
-      return f ? "on" : "default";
-    }
-  });
-  </script>
+            powerHandler: function() {
+                sendTvPower(this.name, this.power);
+            },
+
+            iconTap: function (e) {
+                let icon = e.target.parentElement.id;
+                switch (icon) {
+                    case 'mute':
+                        this.mute = !this.mute;
+                        break;
+                    case 'power':
+                        this.power = !this.power;
+                        break;
+                }
+            },
+
+            volumeHandler: function() {
+                sendTvVolume(this.name, this.volume);
+            },
+            computeClass: function (f) {
+                return f ? "on" : "default";
+            }
+        });
+    </script>
 </dom-module>
