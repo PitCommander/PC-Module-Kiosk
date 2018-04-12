@@ -99,12 +99,12 @@
                 <h1>{{name}} TV</h1>
                 <div class="cecControls">
                     <iron-icon class="big" icon="{{icon}}"></iron-icon>
-                    <paper-slider min="0" max="100" immediate-value="{{volume}}" value="[[volume]]"
+                    <paper-slider min="0" max="100"  value="{{volume}}"
                                   step="1"></paper-slider>
                     <paper-icon-button id="mute" class$="{{computeClass(mute)}}" icon="av:volume-off"
-                                       on-tap="iconTap"></paper-icon-button>
+                                       on-tap="muteHandler"></paper-icon-button>
                     <paper-icon-button id="power" class$="{{computeClass(power)}}" icon="power-settings-new"
-                                       on-tap="iconTap"></paper-icon-button>
+                                       on-tap="powerHandler"></paper-icon-button>
                 </div>
             </div>
             <paper-button-group selected="{{selected}}">
@@ -130,17 +130,14 @@
                 },
                 mute: {
                     type: Boolean,
-                    value: false,
-                    observer: 'muteHandler'
+                    value: false
                 },
                 power: {
                     type: Boolean,
-                    value: false,
-                    observer: 'powerHandler'
+                    value: false
                 },
                 volume: {
                     type: Number,
-                    value: 50,
                     observer: "volumeHandler"
                 },
                 muteVolume: {
@@ -153,54 +150,24 @@
                 }
             },
 
-            iconHandler: function () {
-                if (this.volume === 0) {
-                    this.icon = "av:volume-off";
-                } else if (this.volume > 0 && this.volume < 34) {
-                    this.mute = (this.volume === 0);
-                    this.icon = "av:volume-mute";
-                } else if (this.volume >= 34 && this.volume < 67) {
-                    this.mute = (this.volume === 0);
-                    this.icon = "av:volume-down";
-                } else if (this.volume >= 67 && this.volume <= 100) {
-                    this.icon = "av:volume-up";
-                    this.mute = (this.volume === 0);
-                }
-            },
             muteHandler: function () {
-                if (this.mute) {
-                    this.muteVolume = this.volume;
-                    this.volume = 0;
-                } else {
-                    this.volume = this.muteVolume;
-                }
-
-                sendTvMute(this.name);
-
+                    sendTvMute(this.name);
             },
 
-            contentHandler: function() {
-                sendTvContent(this.name, this.selected);
-            },
-
-            powerHandler: function() {
-                sendTvPower(this.name, this.power);
-            },
-
-            iconTap: function (e) {
-                let icon = e.target.parentElement.id;
-                switch (icon) {
-                    case 'mute':
-                        this.mute = !this.mute;
-                        break;
-                    case 'power':
-                        this.power = !this.power;
-                        break;
+            contentHandler: function () {
+                if (!externalUpdate) {
+                    sendTvContent(this.name, this.selected);
                 }
             },
 
-            volumeHandler: function() {
-                sendTvVolume(this.name, this.volume);
+            powerHandler: function () {
+                    sendTvPower(this.name);
+            },
+
+            volumeHandler: function () {
+                if (!externalUpdate) {
+                    sendTvVolume(this.name, this.volume);
+                }
             },
             computeClass: function (f) {
                 return f ? "on" : "default";

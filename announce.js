@@ -8,12 +8,16 @@ require('highcharts/highcharts-more')(Highcharts);
 require('highcharts/modules/solid-gauge')(Highcharts);
 const zmq = require('zeromq');
 
+let externalUpdate = true;
 
 let checklists = document.querySelectorAll('checklist-view');
+let tvs = document.querySelectorAll('tv-control');
 let matchView = document.querySelector('match-view');
 let batteryPage = document.querySelector('battery-view');
 let badToast = document.querySelector('.badToast');
 let goodToast = document.querySelector('.goodToast');
+let matchChecklist, safetyChecklist;
+let leftTv, rightTv;
 
 let teamNum = 401;
 let tz = "America/New_York";
@@ -32,8 +36,13 @@ subSock.on('message', function (message) {
     matchView = document.querySelector('match-view');
     batteryPage = document.querySelector('battery-view');
     checklists = document.querySelectorAll('checklist-view');
-    let matchChecklist = checklists[0];
-    let safetyChecklist = checklists[1];
+    tvs = document.querySelectorAll('tv-control');
+
+    leftTv = tvs[0];
+    rightTv = tvs[1];
+
+    matchChecklist = checklists[0];
+    safetyChecklist = checklists[1];
 
     switch (message.id) {
         case 'TimeTick':
@@ -70,6 +79,13 @@ subSock.on('message', function (message) {
             } catch (err) {
             }
             break;
+        case 'TvContainerUpdate':
+            data = data.container;
+            try {
+                handleTvContainer(data);
+            } catch (err) {
+            }
+            break;
         case 'BatteryContainerUpdate':
             data = data.container;
             try {
@@ -83,9 +99,16 @@ subSock.on('message', function (message) {
 reqSock = zmq.socket('req');
 reqSock.connect('tcp://' + CURRENT_IP + ':5801');
 reqSock.on('message', function (message) {
+    matchView = document.querySelector('match-view');
+    batteryPage = document.querySelector('battery-view');
     checklists = document.querySelectorAll('checklist-view');
-    let matchChecklist = checklists[0];
-    let safetyChecklist = checklists[1];
+    tvs = document.querySelectorAll('tv-control');
+
+    matchChecklist = checklists[0];
+    safetyChecklist = checklists[1];
+
+    leftTv = tvs[0];
+    rightTv = tvs[1];
 
     badToast = document.querySelector('.badToast');
     goodToast = document.querySelector('.goodToast');
@@ -125,6 +148,12 @@ reqSock.on('message', function (message) {
         case 'GENERALC_DATA':
             try {
                 handleGeneralContainer(data);
+            } catch (err) {
+            }
+            break;
+        case 'TV_DATA':
+            try {
+                handleTvContainer(data);
             } catch (err) {
             }
             break;
@@ -217,6 +246,7 @@ function sendMatchContainerRequest() {
 }
 
 function sendTvRequest() {
+    console.log("Sent tv request");
     sendPacket({id: 'TV_FETCH'});
 }
 
@@ -226,15 +256,16 @@ function sendTvMute(name) {
         payload: {
             name: name
         }
-    }
+    };
+
+    sendPacket(message);
 }
 
-function sendTvPower(name, power) {
+function sendTvPower(name) {
     let message = {
-        id: 'TV_POWER_SET',
+        id: 'TV_POWER_TOGGLE',
         payload: {
-            name: name,
-            power: power
+            name: name
         }
     };
 
@@ -250,7 +281,6 @@ function sendTvVolume(name, volume) {
         }
     };
 
-    console.log(message);
     sendPacket(message);
 }
 
@@ -312,6 +342,22 @@ function handleMatchChecklist(data) {
 
 function handleSafetyChecklist(data) {
     safetyChecklist.set('items', data.boxes);
+}
+
+function handleTvContainer(data) {
+    console.log(data);
+
+    externalUpdate = true;
+    leftTv.selected = data.tvs['Left'].content.toUpperCase();
+    leftTv.volume = data.tvs['Left'].volume;
+    leftTv.power = data.tvs['Left'].power;
+    leftTv.mute = data.tvs['Left'].muted;
+
+    rightTv.selected = data.tvs['Right'].content.toUpperCase();
+    rightTv.volume = data.tvs['Right'].volume;
+    rightTv.power = data.tvs['Right'].power;
+    rightTv.mute = data.tvs['Right'].muted;
+    externalUpdate = false;
 }
 
 function ignoreOurTeam(value) {

@@ -2,33 +2,37 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="tv-control.html">
 <dom-module id="screen-view">
-  <template>
-    <style include="shared-styles">
-     :host {
-      display: block;
-      padding: 10px;
-    }
-    
-    @media only screen and (max-width: 1823px) {
-      .tvCards {
-        @apply(--layout-vertical);
-      }
-    }
-    
-    @media only screen and (min-width: 1824px) {
-      .tvCards {
-        @apply(--layout-horizontal);
-      }
-    }
-    </style>
-    <div class="tvCards">
-      <tv-control name="Left" selected="STREAM" class="flex-child"></tv-control>
-      <tv-control name="Right" selected="TIMER" class="flex-child"></tv-control>
-    </div>
-  </template>
-  <script>
-  Polymer({
-    is: 'screen-view',
-  });
-  </script>
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+
+            @media only screen and (max-width: 1823px) {
+                .tvCards {
+                    @apply(--layout-vertical);
+                }
+            }
+
+            @media only screen and (min-width: 1824px) {
+                .tvCards {
+                    @apply(--layout-horizontal);
+                }
+            }
+        </style>
+        <div class="tvCards">
+            <tv-control name="Left" class="flex-child"></tv-control>
+            <tv-control name="Right" class="flex-child"></tv-control>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'screen-view',
+
+            ready: function () {
+                sendTvRequest();
+            }
+        });
+    </script>
 </dom-module>
